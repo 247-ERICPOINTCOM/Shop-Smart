@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "439869257285",
+    "project_id": "shopsmartly-dcc7e",
+    "storage_bucket": "shopsmartly-dcc7e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:439869257285:android:a593e0814c318bcd9c152c",
+        "android_client_info": {
+          "package_name": "com.example.shopsmartly"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "439869257285-8v9qh47nvhqbcnoed01r3dt03c8qtcdj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC9LOPxyAo3kAnhsBncH0LHdFBZoTBayOY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "439869257285-8v9qh47nvhqbcnoed01r3dt03c8qtcdj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
