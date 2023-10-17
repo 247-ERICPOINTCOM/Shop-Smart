@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:shopsmartly/Screens/cart/cart.dart';
+import 'package:shopsmartly/Screens/custom_bottom_bar/CustomBottomBar.dart';
 import 'package:shopsmartly/Screens/product/product_categories/search_categories.dart';
 
 import '../Admin_Screens/Dashboard_Admin.dart';
@@ -54,8 +56,11 @@ class _LoginPageState extends State<LoginPage> {
           // Navigate to the user-specific page
           switch (userType) {
             case 'Users':
-              Navigator.of(context).pushReplacement(
-                MaterialPageRoute(builder: (context) => SearchPage()), //Temporary until allocated a new screen
+              PersistentNavBarNavigator.pushNewScreen(
+                context,
+                screen: CustomBottomBar(),
+                withNavBar: true, // OPTIONAL VALUE. True by default.
+                pageTransitionAnimation: PageTransitionAnimation.fade,
               );
               break;
             case 'admin':
@@ -74,7 +79,7 @@ class _LoginPageState extends State<LoginPage> {
               );
               break;
             default:
-              // Handle other user types or show an error
+            // Handle other user types or show an error
               break;
           }
         }
