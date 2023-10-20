@@ -3,7 +3,7 @@ import 'package:shopsmartly/my_flutter_app_icons.dart';
 import '../Admin_Screens/Add_Order.dart';
 import '../Admin_Screens/adminproduct.dart';
 import '../Login/login_screen.dart';
-import '../profile/my profile.dart';
+import '../profile/my_profile.dart';
 //import '../proudect/proudect.dart';
 import 'Dashboard_BO.dart';
 import 'Help_BO.dart';

@@ -1,12 +1,16 @@
+import 'package:camera/camera.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
+import 'package:shopsmartly/Screens/profile/my_profile.dart';
+import 'package:shopsmartly/Screens/profile/user_profile.dart';
 import 'package:shopsmartly/Screens/user_screen/User_Dashboard.dart';
 import 'package:shopsmartly/constants/constants.dart';
 import 'package:shopsmartly/constants/routes.dart';
 import '../../../firebase_helper/firebase_auth_helper/firebase_auth_helper.dart';
 import '../../../my_flutter_app_icons.dart';
+import '../../camera/camera.dart';
 import '../../user_screen/Menubar_user.dart';
 import 'widgets/single_dash_item.dart';
 
@@ -45,14 +49,18 @@ class _SearchPageState extends State<SearchPage> {
               },
             ),
             TextButton(
-              child: Text("Yes", style: TextStyle(color: Colors.red),),
+              child: Text(
+                "Yes",
+                style: TextStyle(color: Colors.red),
+              ),
               onPressed: () {
-                // // Perform logout action here
-                // FirebaseAuthHelper.instance.signOut();
-                // Navigator.of(context).pop(); // Close the dialog
-                //
-                // // Push the login screen route after successful logout
-                // Navigator.of(context).pushReplacementNamed('/welcome_screen');
+                // Perform logout action here
+                //FirebaseAuthHelper.instance.signOut();
+                Navigator.of(context).pop(); // Close the dialog
+
+                // Push the login screen route after successful logout
+                Navigator.of(context).pushReplacementNamed('/welcome_screen');
+                //Navigator.popUntil(context, ModalRoute.withName("/welcome_screen"));
               },
             ),
           ],
@@ -71,7 +79,7 @@ class _SearchPageState extends State<SearchPage> {
 
       // Fetch the user's email from Firestore based on the UID.
       final userDoc =
-      await FirebaseFirestore.instance.collection('users').doc(uid).get();
+          await FirebaseFirestore.instance.collection('users').doc(uid).get();
 
       if (userDoc.exists) {
         // Retrieve the user's email from Firestore.
@@ -110,23 +118,40 @@ class _SearchPageState extends State<SearchPage> {
         backgroundColor: Colors.transparent,
         elevation: 0,
         leading: IconButton(
-          onPressed: () {},
-          icon: Icon(Icons.image_search),
+          onPressed: () async {
+            await availableCameras().then(
+                  (value) => Navigator.push(
+                  context, MaterialPageRoute(
+                  builder: (_) => CameraPage(cameras: value))
+              ),
+            );
+          },
+          icon: Icon(
+            Icons.image_search,
+            color: kPrimaryLightColor,
+          ),
         ),
         actions: [
           IconButton(
               onPressed: () {
                 _scaffoldKey.currentState?.openEndDrawer();
               },
-              icon: Icon(Icons.list_outlined))
+              icon: Icon(
+                Icons.list_outlined,
+                color: kPrimaryLightColor,
+              ))
         ],
         title: Container(
           //padding: EdgeInsets.all(12),
           child: TextFormField(
             decoration: InputDecoration(
+              enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: kPrimaryLightColor),
+                borderRadius: BorderRadius.circular(15),
+              ),
               isDense: true,
               contentPadding: EdgeInsets.all(10),
-              filled: true,
+              filled: false,
               hintText: "Search",
               fillColor: kPrimaryColor,
               border: OutlineInputBorder(
@@ -149,9 +174,9 @@ class _SearchPageState extends State<SearchPage> {
               child: Center(
                 child: UserAccountsDrawerHeader(
                   accountName:
-                  Text(user, style: const TextStyle(color: kBlackColor)),
+                      Text(user, style: const TextStyle(color: kTextColor)),
                   accountEmail: Text(userEmail,
-                      style: const TextStyle(color: kBlackColor)),
+                      style: const TextStyle(color: kTextColor)),
                   currentAccountPicture: const CircleAvatar(
                     child: ClipOval(
                       child: Icon(Icons.person_outline, size: 70),
@@ -172,7 +197,7 @@ class _SearchPageState extends State<SearchPage> {
               onTap: () {
                 PersistentNavBarNavigator.pushNewScreen(
                   context,
-                  screen: UserPanelApp(),
+                  screen: EditProfile(),
                   withNavBar: true,
                   pageTransitionAnimation: PageTransitionAnimation.fade,
                 );
@@ -194,13 +219,29 @@ class _SearchPageState extends State<SearchPage> {
               },
             ),
             ListTile(
+              title: Text('My Budget'),
+              leading: Icon(
+                Icons.attach_money,
+                color: kPrimaryLightColor,
+              ),
+              onTap: () {
+                PersistentNavBarNavigator.pushNewScreen(
+                  context,
+                  screen: OrdersScreen(),
+                  withNavBar: true,
+                  pageTransitionAnimation: PageTransitionAnimation.fade,
+                );
+              },
+            ),
+            ListTile(
               title: Text('Logout'),
               leading: Icon(
                 Icons.logout,
                 color: kPrimaryLightColor,
               ),
               onTap: () {
-                _showLogoutConfirmationDialog(context); // Show the confirmation dialog
+                _showLogoutConfirmationDialog(
+                    context); // Show the confirmation dialog
               },
             ),
             // Add more items as needed
@@ -209,110 +250,110 @@ class _SearchPageState extends State<SearchPage> {
       ),
       body: isLoading
           ? Center(
-        child: CircularProgressIndicator(),
-      )
+              child: CircularProgressIndicator(),
+            )
           : Padding(
-        padding: const EdgeInsets.all(12),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              GridView.count(
-                shrinkWrap: true,
-                primary: false,
-                padding: EdgeInsets.zero,
-                crossAxisCount: 2,
-                children: [
-                  SingleCardItem(
-                    title: "Home",
-                    onPressed: () {
-                      // Routes.instance.push(
-                      //   widget: UserView(),
-                      //   context: context,
-                      // );
-                    },
-                  ),
-                  SingleCardItem(
-                    title: "Groceries",
-                    onPressed: () {
-                      // Routes.instance.push(
-                      //   widget: UserView(),
-                      //   context: context,
-                      // );
-                    },
-                  ),
-                  SingleCardItem(
-                    title: "Electronics",
-                    onPressed: () {
-                      // Routes.instance.push(
-                      //   widget: CategoriesView(),
-                      //   context: context,
-                      // );
-                    },
-                  ),
-                  SingleCardItem(
-                    title: "Men",
-                    onPressed: () {
-                      // Routes.instance.push(
-                      //   widget: ProductView(),
-                      //   context: context,
-                      // );
-                    },
-                  ),
-                  SingleCardItem(
-                    title: "Women",
-                    onPressed: () {},
-                  ),
-                  SingleCardItem(
-                    title: "Kids",
-                    onPressed: () {
-                      // Routes.instance.push(
-                      //   widget: OrderList(
-                      //     title: "Pending",
-                      //   ),
-                      //   context: context,
-                      // );
-                    },
-                  ),
-                  SingleCardItem(
-                    title: "Toys",
-                    onPressed: () {
-                      // Routes.instance.push(
-                      //   widget: OrderList(
-                      //     title: "Delivery",
-                      //   ),
-                      //   context: context,
-                      // );
-                    },
-                  ),
-                  SingleCardItem(
-                    title: "Accessories",
-                    onPressed: () {
-                      // Routes.instance.push(
-                      //   widget: OrderList(
-                      //     title: "Cancelled",
-                      //   ),
-                      //   context: context,
-                      // );
-                    },
-                  ),
-                  SingleCardItem(
-                    title: "Tools",
-                    onPressed: () {
-                      // Routes.instance.push(
-                      //   widget: OrderList(
-                      //     title: "Completed",
-                      //   ),
-                      //   context: context,
-                      // );
-                    },
-                  ),
-                ],
+              padding: const EdgeInsets.all(12),
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    GridView.count(
+                      shrinkWrap: true,
+                      primary: false,
+                      padding: EdgeInsets.zero,
+                      crossAxisCount: 2,
+                      children: [
+                        SingleCardItem(
+                          title: "Home",
+                          onPressed: () {
+                            // Routes.instance.push(
+                            //   widget: UserView(),
+                            //   context: context,
+                            // );
+                          },
+                        ),
+                        SingleCardItem(
+                          title: "Groceries",
+                          onPressed: () {
+                            // Routes.instance.push(
+                            //   widget: UserView(),
+                            //   context: context,
+                            // );
+                          },
+                        ),
+                        SingleCardItem(
+                          title: "Electronics",
+                          onPressed: () {
+                            // Routes.instance.push(
+                            //   widget: CategoriesView(),
+                            //   context: context,
+                            // );
+                          },
+                        ),
+                        SingleCardItem(
+                          title: "Men",
+                          onPressed: () {
+                            // Routes.instance.push(
+                            //   widget: ProductView(),
+                            //   context: context,
+                            // );
+                          },
+                        ),
+                        SingleCardItem(
+                          title: "Women",
+                          onPressed: () {},
+                        ),
+                        SingleCardItem(
+                          title: "Kids",
+                          onPressed: () {
+                            // Routes.instance.push(
+                            //   widget: OrderList(
+                            //     title: "Pending",
+                            //   ),
+                            //   context: context,
+                            // );
+                          },
+                        ),
+                        SingleCardItem(
+                          title: "Toys",
+                          onPressed: () {
+                            // Routes.instance.push(
+                            //   widget: OrderList(
+                            //     title: "Delivery",
+                            //   ),
+                            //   context: context,
+                            // );
+                          },
+                        ),
+                        SingleCardItem(
+                          title: "Accessories",
+                          onPressed: () {
+                            // Routes.instance.push(
+                            //   widget: OrderList(
+                            //     title: "Cancelled",
+                            //   ),
+                            //   context: context,
+                            // );
+                          },
+                        ),
+                        SingleCardItem(
+                          title: "Tools",
+                          onPressed: () {
+                            // Routes.instance.push(
+                            //   widget: OrderList(
+                            //     title: "Completed",
+                            //   ),
+                            //   context: context,
+                            // );
+                          },
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
-            ],
-          ),
-        ),
-      ),
+            ),
     );
   }
 }

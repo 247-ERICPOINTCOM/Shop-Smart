@@ -1,3 +1,4 @@
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shopsmartly/Screens/custom_bottom_bar/CustomBottomBar.dart';
@@ -31,7 +32,7 @@ import 'package:shopsmartly/Screens/delivery/deliveryinfo.dart';
 import 'package:shopsmartly/Screens/order/my order.dart';
 import 'package:shopsmartly/Screens/order/order detiles.dart';
 import 'package:shopsmartly/Screens/order/review order.dart';
-import 'package:shopsmartly/Screens/profile/my profile.dart';
+import 'package:shopsmartly/Screens/profile/my_profile.dart';
 import 'package:shopsmartly/Screens/order/track shipment.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'Screens/Login/user.dart';
@@ -42,6 +43,13 @@ import 'Screens/user_screen/User_Dashboard.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  // Obtain a list of the available cameras on the device.
+  final cameras = await availableCameras();
+
+// Get a specific camera from the list of available cameras.
+  final firstCamera = cameras.first;
+
   await Firebase.initializeApp();
   runApp(
     ChangeNotifierProvider(
@@ -81,7 +89,7 @@ class MyApp extends StatelessWidget {
           },
         ),
       ),
-      initialRoute: "WelcomeScreen",
+      initialRoute: "welcome_screen",
       // Change this to the initial route you prefer
       routes: {
         'welcome_screen': (context) => WelcomeScreen(),

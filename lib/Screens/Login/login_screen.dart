@@ -12,7 +12,7 @@ import '../Admin_Screens/Dashboard_Admin.dart';
 import '../BusinessOwner_Screens/Dashboard_BO.dart';
 import '../Delivery_Dashboard/delivery_dashboard.dart';
 import '../SignUp/signup_screen.dart';
-import '../profile/my profile.dart';
+import '../profile/my_profile.dart';
 import '../user_screen/User_Dashboard.dart';
 import 'forget_password.dart';
 
@@ -169,7 +169,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     validator: (value) {
                       if (value?.isEmpty ?? true) {
-                        return 'Please your password';
+                        return 'Please input your password';
                       }
                       return null;
                     },

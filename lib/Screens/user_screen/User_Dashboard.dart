@@ -25,7 +25,7 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: const Menubar_user(),
+      //drawer: const Menubar_user(),
       backgroundColor: Colors.grey, // Change the background color to grey
       appBar: AppBar(
         backgroundColor: Colors.green, // Change the app bar color to green

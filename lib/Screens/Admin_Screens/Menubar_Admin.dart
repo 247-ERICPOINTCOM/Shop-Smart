@@ -7,7 +7,7 @@ import 'package:shopsmartly/Screens/Admin_Screens/Delivery_List.dart';
 import '../BusinessOwner_Screens/businessadd.dart';
 import '../Login/login_screen.dart';
 import '../cart/cart.dart';
-import '../profile/my profile.dart';
+import '../profile/my_profile.dart';
 //import '../proudect/proudect.dart';
 import '../userproduct.dart';
 import 'Settings.dart';

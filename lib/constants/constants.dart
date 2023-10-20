@@ -8,6 +8,7 @@ const kBackgroundColor = Color(0xFFF7F7F7);
 const kTextColor = Color(0xff555555);
 const kLinkTextColor = Color(0xFF0095FF);
 const kInputColor = Color(0xFFe3e3e3);
+var user = 'User';
 
 void showMessage(String message) {
   Fluttertoast.showToast(

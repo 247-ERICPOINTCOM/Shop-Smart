@@ -28,7 +28,7 @@ import 'package:shopsmartly/Screens/delivery/deliveryinfo.dart';
 import 'package:shopsmartly/Screens/order/my order.dart';
 import 'package:shopsmartly/Screens/order/order detiles.dart';
 import 'package:shopsmartly/Screens/order/review order.dart';
-import 'package:shopsmartly/Screens/profile/my profile.dart';
+import 'package:shopsmartly/Screens/profile/my_profile.dart';
 import 'package:shopsmartly/Screens/order/track shipment.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'Screens/Login/user.dart';
