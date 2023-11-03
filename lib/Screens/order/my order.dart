@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shopsmartly/constants/constants.dart';
 
 class MyOrders extends StatefulWidget {
   const MyOrders({Key? key}) : super(key: key);
@@ -11,10 +12,12 @@ class _MyOrdersState extends State<MyOrders> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 253, 237, 237),
+      backgroundColor: kBackgroundColor,
       appBar: AppBar(
+        elevation: 0,
         backgroundColor: Colors.grey[100],
-        title: const Text('Orders',
+        title: const Text(
+          'Orders',
           style: TextStyle(
             color: Color.fromARGB(255, 112, 112, 112),
             fontWeight: FontWeight.bold,
@@ -22,9 +25,9 @@ class _MyOrdersState extends State<MyOrders> {
           ),
         ),
       ),
-      body:Container(
+      body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(5,10,5,10),
+          padding: const EdgeInsets.fromLTRB(5, 10, 5, 10),
           child: Column(
             children: <Widget>[
               Card(
@@ -35,12 +38,15 @@ class _MyOrdersState extends State<MyOrders> {
                       children: [
                         Row(
                           children: [
-                            const Text('Order : Nsa65fg ',
+                            const Text(
+                              'Order : Nsa65fg ',
                               style: TextStyle(
                                   fontSize: 16,
-                                  color: Color.fromARGB(255, 155, 155, 155)
-                              ),),
-                            const SizedBox(width: 80,),
+                                  color: Color.fromARGB(255, 155, 155, 155)),
+                            ),
+                            const SizedBox(
+                              width: 80,
+                            ),
                             GestureDetector(
                               onTap: () {
                                 Navigator.pushNamed(context, "OrderDetails");
@@ -48,8 +54,8 @@ class _MyOrdersState extends State<MyOrders> {
                               child: const Text(
                                 'View Details ',
                                 style: TextStyle(
-                                    decoration: TextDecoration.underline,
-                                    color: Color.fromARGB(255, 200, 227, 221)
+                                  decoration: TextDecoration.underline,
+                                  color: kPrimaryLightColor,
                                 ),
                               ),
                             ),
@@ -57,7 +63,8 @@ class _MyOrdersState extends State<MyOrders> {
                         ),
                         const Padding(
                           padding: EdgeInsets.only(right: 165.0),
-                          child: Text('Place On Mar 8, 2022',
+                          child: Text(
+                            'Place On Mar 8, 2022',
                             style: TextStyle(
                               color: Color.fromARGB(255, 185, 185, 185),
                             ),
@@ -69,17 +76,22 @@ class _MyOrdersState extends State<MyOrders> {
                         ),
                         Row(
                           children: [
-                            Image.asset('assets/images/image.png',width: 60,),
+                            Image.asset(
+                              'assets/images/image.png',
+                              width: 60,
+                            ),
                             const Padding(
                               padding: EdgeInsets.all(20.0),
                               child: Column(
                                 children: [
-                                  Text('Lorem opseum',
+                                  Text(
+                                    'Lorem opseum',
                                     style: TextStyle(
                                       color: Color.fromARGB(255, 185, 185, 185),
                                     ),
                                   ),
-                                  Text('Delivered  ',
+                                  Text(
+                                    'Delivered  ',
                                     style: TextStyle(
                                       color: Color.fromARGB(255, 185, 185, 185),
                                     ),
@@ -89,16 +101,20 @@ class _MyOrdersState extends State<MyOrders> {
                             ),
                           ],
                         ),
-                        const SizedBox(width: 10,),
+                        const SizedBox(
+                          width: 10,
+                        ),
                         FloatingActionButton.extended(
                           label: const Text('Review this order'), // <-- Text
-                          backgroundColor: const Color.fromARGB(255, 180, 214, 119),
-                          icon: const Icon( // <-- Icon
+                          backgroundColor:
+                              kPrimaryLightColor,
+                          icon: const Icon(
+                            // <-- Icon
                             Icons.rate_review,
                             size: 24.0,
                           ),
                           onPressed: () {
-                            Navigator.pushNamed(context,"ReviewOrder1");
+                            Navigator.pushNamed(context, "ReviewOrder1");
                           },
                         ),
                       ],
@@ -106,7 +122,9 @@ class _MyOrdersState extends State<MyOrders> {
                   ),
                 ),
               ),
-              const SizedBox(height: 40,),
+              const SizedBox(
+                height: 5,
+              ),
               Card(
                 child: Container(
                   child: Padding(
@@ -115,12 +133,15 @@ class _MyOrdersState extends State<MyOrders> {
                       children: [
                         Row(
                           children: [
-                            const Text('Order : Nsa65fg ',
+                            const Text(
+                              'Order : Nsa65fg ',
                               style: TextStyle(
                                   fontSize: 16,
-                                  color: Color.fromARGB(255, 155, 155, 155)
-                              ),),
-                            const SizedBox(width: 80,),
+                                  color: Color.fromARGB(255, 155, 155, 155)),
+                            ),
+                            const SizedBox(
+                              width: 80,
+                            ),
                             GestureDetector(
                               onTap: () {
                                 Navigator.pushNamed(context, "");
@@ -129,15 +150,15 @@ class _MyOrdersState extends State<MyOrders> {
                                 'View Details ',
                                 style: TextStyle(
                                     decoration: TextDecoration.underline,
-                                    color: Color.fromARGB(255, 200, 227, 221)
-                                ),
+                                    color: Color.fromARGB(255, 200, 227, 221)),
                               ),
                             ),
                           ],
                         ),
                         const Padding(
                           padding: EdgeInsets.only(right: 165.0),
-                          child: Text('Place On Mar 8, 2022',
+                          child: Text(
+                            'Place On Mar 8, 2022',
                             style: TextStyle(
                               color: Color.fromARGB(255, 185, 185, 185),
                             ),
@@ -149,17 +170,22 @@ class _MyOrdersState extends State<MyOrders> {
                         ),
                         Row(
                           children: [
-                            Image.asset('assets/images/image.png',width: 60,),
+                            Image.asset(
+                              'assets/images/image.png',
+                              width: 60,
+                            ),
                             const Padding(
                               padding: EdgeInsets.all(20.0),
                               child: Column(
                                 children: [
-                                  Text('Lorem opseum',
+                                  Text(
+                                    'Lorem opseum',
                                     style: TextStyle(
                                       color: Color.fromARGB(255, 185, 185, 185),
                                     ),
                                   ),
-                                  Text('Delivered  ',
+                                  Text(
+                                    'Delivered  ',
                                     style: TextStyle(
                                       color: Color.fromARGB(255, 185, 185, 185),
                                     ),
@@ -169,26 +195,32 @@ class _MyOrdersState extends State<MyOrders> {
                             ),
                           ],
                         ),
-                        const SizedBox(width: 10,),
+                        const SizedBox(
+                          width: 10,
+                        ),
                         FloatingActionButton.extended(
                           label: const Text('Review this order'), // <-- Text
-                          backgroundColor: const Color.fromARGB(255, 180, 214, 119),
-                          icon: const Icon( // <-- Icon
+                          backgroundColor:
+                              kPrimaryLightColor,
+                          icon: const Icon(
+                            // <-- Icon
                             Icons.rate_review,
                             size: 24.0,
                           ),
                           onPressed: () {
-                            Navigator.pushNamed(context,"ReviewOrder1");
+                            Navigator.pushNamed(context, "ReviewOrder1");
                           },
-                        ),                      ],
+                        ),
+                      ],
                     ),
                   ),
                 ),
               ),
+              SizedBox(height: 50,)
             ],
           ),
         ),
-      ) ,
+      ),
     );
   }
 }

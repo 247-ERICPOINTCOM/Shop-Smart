@@ -15,9 +15,12 @@ class SingleCardItem extends StatelessWidget {
       padding: EdgeInsets.zero,
       onPressed: onPressed,
       child: Card(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10)
+        ),
         child: Container(
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(5),
+            borderRadius: BorderRadius.all(Radius.circular(10)),
             color: kPrimaryLightColor,
           ),
           width: double.infinity,

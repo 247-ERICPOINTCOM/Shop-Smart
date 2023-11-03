@@ -7,23 +7,23 @@ String storesModelToJson(StoresModel data) => json.encode(data.toJson());
 
 class StoresModel {
   StoresModel({
-    required this.storeId,
+    required this.storeID,
     required this.storeImage,
     required this.storeName,
   });
 
-  String storeId;
+  String storeID;
   String storeImage;
   String storeName;
 
   factory StoresModel.fromJson(Map<String, dynamic> json) => StoresModel(
-    storeId: json["storeId"],
+    storeID: json["storeID"],
     storeImage: json["storeImage"],
     storeName: json["storeName"],
   );
 
   Map<String, dynamic> toJson() => {
-    "storeId": storeId,
+    "storeID": storeID,
     "storeImage": storeImage,
     "storeName": storeName,
   };

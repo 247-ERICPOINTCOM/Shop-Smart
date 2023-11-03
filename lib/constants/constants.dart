@@ -50,4 +50,44 @@ showLoaderDialog(BuildContext context) {
   );
 }
 
+bool loginValidation(String email, String password) {
+  if (email.isEmpty && password.isEmpty) {
+    showMessage("Both fields are empty");
+    return false;
+  } else if (email.isEmpty) {
+    showMessage("E-mail is empty");
+    return false;
+  } else if (password.isEmpty) {
+    showMessage("Password is empty");
+    return false;
+  } else {
+    return true;
+  }
+}
+
+bool signUpValidation(
+    String email, String password, String name, String phone, String house) {
+  if (email.isEmpty && password.isEmpty && name.isEmpty && phone.isEmpty) {
+    showMessage("All fields are empty");
+    return false;
+  } else if (name.isEmpty) {
+    showMessage("Name field is empty");
+    return false;
+  } else if (email.isEmpty) {
+    showMessage("E-mail field is empty");
+    return false;
+  } else if (phone.isEmpty) {
+    showMessage("Phone Number field is empty");
+    return false;
+  } else if (house.isEmpty) {
+    showMessage("House Address field is empty");
+    return false;
+  } else if (password.isEmpty) {
+    showMessage("Password field is empty");
+    return false;
+  } else {
+    return true;
+  }
+}
+
 // fonts

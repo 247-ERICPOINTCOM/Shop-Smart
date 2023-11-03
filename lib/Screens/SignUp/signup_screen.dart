@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -21,6 +22,9 @@ class _SignupPageState extends State<SignupPage> {
   String _username = '';
   String _selectedUserType = 'Users'; // Default user type
 
+  bool isShowPassword = true;
+  bool isShowConfirmPassword = true;
+
   // Function to handle signup
   void _signUp() async {
     if (_formKey.currentState!.validate()) {
@@ -43,16 +47,21 @@ class _SignupPageState extends State<SignupPage> {
 
         // Store user data in Firestore with the UID
         await _firestore.collection('users').doc(userUID).set({
-          'email': _email,
-          'username': _username,
+          'userEmail': _email,
+          'userName': _username,
           'userType': _selectedUserType,
           // Add other user data fields here
         });
+
+        // Send email verification
+        await userCredential.user!.sendEmailVerification();
 
         // Navigate to the login page after successful signup
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(builder: (context) => LoginPage()),
         );
+
+        showMessage("Please check your email for account verification.");
       } catch (e) {
         // Handle signup errors and provide feedback to the user
         showDialog(
@@ -79,194 +88,188 @@ class _SignupPageState extends State<SignupPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: true,
-      backgroundColor: kBackgroundColor,
-      appBar: AppBar(
-        elevation: 0,
-        systemOverlayStyle: SystemUiOverlayStyle.light,
-        backgroundColor: kBackgroundColor,
-        leading: IconButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          icon: Icon(Icons.arrow_back_ios),
-          iconSize: 20,
-          color: kTextColor,
-        ),
-      ),
-      body: SingleChildScrollView(
-        child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 40),
-          height: MediaQuery.of(context).size.height - 50,
-          width: double.infinity,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: <Widget>[
-              Column(
+      body: Center(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Text(
-                    "Sign Up",
-                    style: TextStyle(
-                      fontSize: 30,
-                      fontWeight: FontWeight.bold,
-                      color: kTextColor,
+                  Container(
+                    height: MediaQuery.of(context).size.height / 3.0,
+                    decoration: const BoxDecoration(
+                        image: DecorationImage(
+                            image: AssetImage("assets/images/logo.png"))),
+                  ),
+                  TextFormField(
+                    decoration: InputDecoration(
+                      labelText: 'Username',
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(60.0),
+                      ),
+                    ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter a username';
+                      }
+                      return null;
+                    },
+                    onChanged: (value) {
+                      setState(() {
+                        _username = value;
+                      });
+                    },
+                  ),
+                  SizedBox(
+                    height: 12.0,
+                  ),
+                  TextFormField(
+                    keyboardType: TextInputType.emailAddress,
+                    decoration: InputDecoration(
+                      labelText: 'Email',
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(60.0),
+                      ),
+                    ),
+                    validator: (value) {
+                      if (value?.isEmpty ?? true) {
+                        return 'Please enter your email';
+                      }
+                      return null;
+                    },
+                    onChanged: (value) {
+                      setState(() {
+                        _email = value;
+                      });
+                    },
+                  ),
+                  SizedBox(
+                    height: 12.0,
+                  ),
+                  TextFormField(
+                    obscureText: isShowPassword,
+                    decoration: InputDecoration(
+                      labelText: 'Password',
+                      suffixIcon: CupertinoButton(
+                          onPressed: () {
+                            setState(() {
+                              isShowPassword = !isShowPassword;
+                            });
+                          },
+                          padding: EdgeInsets.zero,
+                          child: Icon(
+                            isShowPassword
+                                ? Icons.visibility
+                                : Icons.visibility_off, // Toggle the icon
+                            color: kTextColor,
+                          )),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(60.0)),
+                    ),
+                    validator: (value) {
+                      if (value?.isEmpty ?? true) {
+                        return 'Please input your password';
+                      }
+                      return null;
+                    },
+                    onChanged: (value) {
+                      setState(() {
+                        _password = value;
+                      });
+                    },
+                  ),
+                  SizedBox(height: 12.0),
+                  TextFormField(
+                    obscureText: isShowConfirmPassword,
+                    decoration: InputDecoration(
+                      labelText: 'Confirm Password',
+                      suffixIcon: CupertinoButton(
+                          onPressed: () {
+                            setState(() {
+                              isShowConfirmPassword = !isShowConfirmPassword;
+                            });
+                          },
+                          padding: EdgeInsets.zero,
+                          child: Icon(
+                            isShowConfirmPassword
+                                ? Icons.visibility
+                                : Icons.visibility_off, // Toggle the icon
+                            color: kTextColor,
+                          )),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(60.0)),
+                    ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter your password';
+                      } else if (value != _password) {
+                        return 'Passwords do not match';
+                      }
+                      return null;
+                    },
+                    onChanged: (value) {
+                      setState(() {
+                        _confirmPassword = value;
+                      });
+                    },
+                  ),
+                  SizedBox(height: 12.0),
+                  SizedBox(
+                    width: double.infinity,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(60),
+                        border: Border.all(color: kTextColor, width: 0),
+                      ),
+                      width: 300,
+                      child: DropdownButtonHideUnderline(
+                        child: ButtonTheme(
+                          alignedDropdown: true,
+                          child: DropdownButton(
+                            value: _selectedUserType,
+                            onChanged: (value) {
+                              setState(() {
+                                _selectedUserType = value.toString();
+                              });
+                            },
+                            items: [
+                              'Users',
+                              'Admin',
+                              'Business Owner',
+                              'Delivery'
+                            ].map((type) {
+                              return DropdownMenuItem(
+                                value: type,
+                                child: Text(type),
+                              );
+                            }).toList(),
+                          ),
+                        ),
+                      ),
                     ),
                   ),
-                  SizedBox(height: 20),
-                  Text(
-                    "Create an account",
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w400,
-                      color: Colors.grey,
-                    ),
+                  SizedBox(height: 20.0),
+                  MaterialButton(
+                    minWidth: double.infinity,
+                    height: 60,
+                    onPressed:  _signUp,
+                    color: kPrimaryLightColor,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(50)),
+                    child: const Text("Sign Up",
+                        style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.white)),
+                  ),
+                  SizedBox(
+                    height: 10,
                   ),
                 ],
               ),
-              Card(
-                elevation: 2, // Adjust the elevation as needed
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15.0),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Form(
-                    key: _formKey, // Ensure _formKey is assigned here
-                    child: Column(
-                      children: <Widget>[
-                        TextFormField(
-                          decoration: InputDecoration(labelText: 'Username'),
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please enter a username';
-                            }
-                            return null;
-                          },
-                          onChanged: (value) {
-                            setState(() {
-                              _username = value;
-                            });
-                          },
-                        ),
-                        SizedBox(height: 16),
-                        TextFormField(
-                          keyboardType: TextInputType.emailAddress,
-                          decoration: InputDecoration(labelText: 'Email'),
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please enter an email';
-                            }
-                            return null;
-                          },
-                          onChanged: (value) {
-                            setState(() {
-                              _email = value;
-                            });
-                          },
-                        ),
-                        SizedBox(height: 16),
-                        TextFormField(
-                          obscureText: true,
-                          decoration: InputDecoration(labelText: 'Password'),
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please enter a password';
-                            }
-                            return null;
-                          },
-                          onChanged: (value) {
-                            setState(() {
-                              _password = value;
-                            });
-                          },
-                        ),
-                        SizedBox(height: 16),
-                        TextFormField(
-                          obscureText: true,
-                          decoration:
-                          InputDecoration(labelText: 'Confirm Password'),
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please confirm your password';
-                            } else if (value != _password) {
-                              return 'Passwords do not match';
-                            }
-                            return null;
-                          },
-                          onChanged: (value) {
-                            setState(() {
-                              _confirmPassword = value;
-                            });
-                          },
-                        ),
-                        SizedBox(height: 16),
-                        DropdownButtonFormField(
-                          value: _selectedUserType,
-                          onChanged: (value) {
-                            setState(() {
-                              _selectedUserType = value.toString();
-                            });
-                          },
-                          items: ['Users', 'admin', 'BusinessOwner', 'delivery']
-                              .map((type) {
-                            return DropdownMenuItem(
-                              value: type,
-                              child: Text(type),
-                            );
-                          }).toList(),
-                        ),
-                        SizedBox(height: 20.0),
-                        Container(
-                          padding: EdgeInsets.only(top: 3, left: 3),
-                          child: MaterialButton(
-                            minWidth: double.infinity,
-                            height: 60,
-                            onPressed: _signUp, // Call _signUp function
-                            color: kPrimaryColor,
-                            elevation: 0,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(50),
-                            ),
-                            child: Text(
-                              "Sign Up",
-                              style: TextStyle(
-                                fontWeight: FontWeight.w600,
-                                fontSize: 18,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: 16),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            TextButton(
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => LoginPage(),
-                                  ),
-                                );
-                              },
-                              child: Text(
-                                "Already have an account? ",
-                                style: TextStyle(
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: 15,
-                                  color: kLinkTextColor,
-                                ),
-                              ),
-                            ),
-                          ],
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ],
+            ),
           ),
         ),
       ),

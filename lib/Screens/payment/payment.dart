@@ -5,11 +5,11 @@ import 'package:firebase_database/firebase_database.dart';
 enum PaymentMethod { payOnDelivery, payPal, stripe }
 enum ShippingMethod { standard, express }
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
-  runApp(MyApp());
-}
+// void main() async {
+//   WidgetsFlutterBinding.ensureInitialized();
+//   await Firebase.initializeApp();
+//   runApp(MyApp());
+// }
 
 class FirebaseService {
   final DatabaseReference _database = FirebaseDatabase.instance.reference();
@@ -207,16 +207,16 @@ class _PaymentScreenState extends State<payment> {
   }
 }
 
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Payment App',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: payment(),
-    );
-  }
-}
+// class MyApp extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       title: 'Payment App',
+//       theme: ThemeData(
+//         primarySwatch: Colors.blue,
+//       ),
+//       home: payment(),
+//     );
+//   }
+// }
 

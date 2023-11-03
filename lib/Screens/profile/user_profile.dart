@@ -42,42 +42,51 @@ class _EditProfileState extends State<EditProfile> {
   @override
   void initState() {
     super.initState();
-    // Fetch the user's email when the widget is initialized
-    fetchUserEmail();
+    // // Fetch the user's email when the widget is initialized
+    // fetchUserEmail();
   }
 
   ///This email display is temporary, it's here just to show the email. Will be change properly using the provider.
-  void fetchUserEmail() async {
-    // Use Firebase Authentication to get the currently authenticated user.
-    final user = FirebaseAuth.instance.currentUser;
-
-    if (user != null) {
-      // Get the user's UID.
-      final uid = user.uid;
-
-      // Fetch the user's email from Firestore based on the UID.
-      final userDoc =
-          await FirebaseFirestore.instance.collection('users').doc(uid).get();
-
-      if (userDoc.exists) {
-        // Retrieve the user's email from Firestore.
-        final email = userDoc.get('email');
-
-        // Update the userEmail state.
-        setState(() {
-          userEmail = email;
-        });
-      }
-    }
-  }
+  // void fetchUserEmail() async {
+  //   // Use Firebase Authentication to get the currently authenticated user.
+  //   final user = FirebaseAuth.instance.currentUser;
+  //
+  //   if (user != null) {
+  //     // Get the user's UID.
+  //     final uid = user.uid;
+  //
+  //     // Fetch the user's email from Firestore based on the UID.
+  //     final userDoc =
+  //         await FirebaseFirestore.instance.collection('users').doc(uid).get();
+  //
+  //     if (userDoc.exists) {
+  //       // Retrieve the user's email from Firestore.
+  //       final email = userDoc.get('email');
+  //
+  //       // Update the userEmail state.
+  //       setState(() {
+  //         userEmail = email;
+  //       });
+  //     }
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
-    CartProvider appProvider = Provider.of<CartProvider>(
+    AppProvider appProvider = Provider.of<AppProvider>(
       context,
     );
     return Scaffold(
       appBar: AppBar(
+        leading: GestureDetector(
+          child: Icon(
+            Icons.arrow_back_ios_new,
+            color: Colors.black,
+          ),
+          onTap: () {
+            Navigator.of(context).pop();
+          },
+        ),
         forceMaterialTransparency: true,
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -90,7 +99,7 @@ class _EditProfileState extends State<EditProfile> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  image == null
+                  appProvider.getUserInformation.userImage == null
                       ? CupertinoButton(
                           onPressed: () {
                             takePicture();
@@ -105,19 +114,19 @@ class _EditProfileState extends State<EditProfile> {
                             takePicture();
                           },
                           child: CircleAvatar(
-                            radius: 55,
-                            backgroundImage: FileImage(image!),
+                            radius: 50,
+                            backgroundImage: NetworkImage(appProvider.getUserInformation.userImage!),
                           ),
                         ),
                 ],
               ),
               Align(
                 alignment: Alignment.center,
-                child: Text(user),
+                child: Text(appProvider.getUserInformation.userName),
               ),
               Align(
                 alignment: Alignment.center,
-                child: Text(userEmail),
+                child: Text(appProvider.getUserInformation.userEmail),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -213,6 +222,7 @@ class _EditProfileState extends State<EditProfile> {
                   keyboardType: TextInputType.emailAddress,
                   controller: email,
                   decoration: InputDecoration(
+                    hintText: appProvider.getUserInformation.userEmail,
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(60.0),
                     ),
@@ -240,6 +250,7 @@ class _EditProfileState extends State<EditProfile> {
                   keyboardType: TextInputType.phone,
                   controller: phoneNumber,
                   decoration: InputDecoration(
+                    hintText: appProvider.getUserInformation.userPhone,
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(60.0),
                     ),

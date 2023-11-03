@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:shopsmartly/Screens/cart/cart.dart';
+import 'package:shopsmartly/Screens/cart_screen/cart_screen.dart';
+import 'package:shopsmartly/Screens/order/my%20order.dart';
+import 'package:shopsmartly/Screens/order/order%20detiles.dart';
 import 'package:shopsmartly/Screens/order/review%20order.dart';
+import 'package:shopsmartly/Screens/payment/payment.dart';
 import 'package:shopsmartly/Screens/product/product_categories/search_categories.dart';
 import 'package:shopsmartly/Screens/user_screen/User_Dashboard.dart';
 import 'package:shopsmartly/Screens/user_screen/user_homepage.dart';
+
+import '../user_screen/user_homepageBACK.dart';
 
 class CustomBottomBar extends StatefulWidget {
   const CustomBottomBar({
@@ -20,60 +26,60 @@ class _CustomBottomBarState extends State<CustomBottomBar> {
   bool _hideNavBar = false;
 
   List<Widget> _buildScreens() => [
-    UserHome(),
-    SearchPage(),
-    ProductList(),
-  ];
+        UserHome(),
+        SearchPage(),
+        NewCartScreen(),
+      ];
 
   List<PersistentBottomNavBarItem> _navBarsItems() => [
-    PersistentBottomNavBarItem(
-      icon: const Icon(Icons.home),
-      inactiveIcon: const Icon(Icons.home_outlined),
-      title: "Home",
-      activeColorPrimary: Colors.white,
-      inactiveColorPrimary: Colors.white,
-    ),
-    PersistentBottomNavBarItem(
-      icon: const Icon(Icons.search),
-      inactiveIcon: const Icon(Icons.search_outlined),
-      title: "Search",
-      activeColorPrimary: Colors.white,
-      inactiveColorPrimary: Colors.white,
-    ),
-    PersistentBottomNavBarItem(
-      icon: const Icon(Icons.shopping_cart),
-      inactiveIcon: const Icon(Icons.shopping_cart_outlined),
-      title: "Cart",
-      activeColorPrimary: Colors.white,
-      inactiveColorPrimary: Colors.white,
-    ),
-  ];
+        PersistentBottomNavBarItem(
+          icon: const Icon(Icons.home),
+          inactiveIcon: const Icon(Icons.home_outlined),
+          title: "Home",
+          activeColorPrimary: Colors.white,
+          inactiveColorPrimary: Colors.white,
+        ),
+        PersistentBottomNavBarItem(
+          icon: const Icon(Icons.search),
+          inactiveIcon: const Icon(Icons.search_outlined),
+          title: "Search",
+          activeColorPrimary: Colors.white,
+          inactiveColorPrimary: Colors.white,
+        ),
+        PersistentBottomNavBarItem(
+          icon: const Icon(Icons.shopping_cart),
+          inactiveIcon: const Icon(Icons.shopping_cart_outlined),
+          title: "Cart",
+          activeColorPrimary: Colors.white,
+          inactiveColorPrimary: Colors.white,
+        ),
+      ];
 
   @override
   Widget build(final BuildContext context) => Scaffold(
-    body: PersistentTabView(
-      context,
-      controller: _controller,
-      screens: _buildScreens(),
-      items: _navBarsItems(),
-      resizeToAvoidBottomInset: true,
-      navBarHeight: MediaQuery.of(context).viewInsets.bottom > 0
-          ? 0.0
-          : kBottomNavigationBarHeight,
-      bottomScreenMargin: 0,
+        body: PersistentTabView(
+          context,
+          controller: _controller,
+          screens: _buildScreens(),
+          items: _navBarsItems(),
+          resizeToAvoidBottomInset: true,
+          navBarHeight: MediaQuery.of(context).viewInsets.bottom > 0
+              ? 0.0
+              : kBottomNavigationBarHeight,
+          bottomScreenMargin: 0,
 
-      backgroundColor: Theme.of(context).primaryColor,
-      hideNavigationBar: _hideNavBar,
-      decoration: const NavBarDecoration(colorBehindNavBar: Colors.indigo),
-      itemAnimationProperties: const ItemAnimationProperties(
-        duration: Duration(milliseconds: 400),
-        curve: Curves.ease,
-      ),
-      screenTransitionAnimation: const ScreenTransitionAnimation(
-        animateTabTransition: true,
-      ),
-      navBarStyle: NavBarStyle
-          .style12, // Choose the nav bar style with this property
-    ),
-  );
+          backgroundColor: Theme.of(context).primaryColor,
+          hideNavigationBar: _hideNavBar,
+          decoration: const NavBarDecoration(colorBehindNavBar: Colors.indigo),
+          itemAnimationProperties: const ItemAnimationProperties(
+            duration: Duration(milliseconds: 400),
+            curve: Curves.ease,
+          ),
+          screenTransitionAnimation: const ScreenTransitionAnimation(
+            animateTabTransition: true,
+          ),
+          navBarStyle: NavBarStyle
+              .style12, // Choose the nav bar style with this property
+        ),
+      );
 }

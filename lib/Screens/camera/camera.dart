@@ -131,7 +131,7 @@ class _CameraPageState extends State<CameraPage> {
               Align(
                 alignment: Alignment.bottomCenter,
                 child: Container(
-                  height: MediaQuery.of(context).size.height * 0.30,
+                  height: MediaQuery.of(context).size.height * 0.29,
                   decoration: const BoxDecoration(
                       borderRadius:
                           BorderRadius.vertical(top: Radius.circular(24)),

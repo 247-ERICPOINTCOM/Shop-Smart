@@ -4,16 +4,12 @@ import 'package:flutter/services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
-import 'package:shopsmartly/Screens/cart/cart.dart';
 import 'package:shopsmartly/Screens/custom_bottom_bar/CustomBottomBar.dart';
-import 'package:shopsmartly/Screens/product/product_categories/search_categories.dart';
 
 import '../Admin_Screens/Dashboard_Admin.dart';
 import '../BusinessOwner_Screens/Dashboard_BO.dart';
 import '../Delivery_Dashboard/delivery_dashboard.dart';
 import '../SignUp/signup_screen.dart';
-import '../profile/my_profile.dart';
-import '../user_screen/User_Dashboard.dart';
 import 'forget_password.dart';
 
 // Define your colors
@@ -63,23 +59,41 @@ class _LoginPageState extends State<LoginPage> {
                 pageTransitionAnimation: PageTransitionAnimation.fade,
               );
               break;
-            case 'admin':
-              Navigator.of(context).pushReplacement(
-                MaterialPageRoute(builder: (context) => Dashboard_Admin()),
+            case 'admin' || 'Admin':
+              // Navigator.of(context).pushReplacement(
+              //   MaterialPageRoute(builder: (context) => Dashboard_Admin()),
+              // );
+              PersistentNavBarNavigator.pushNewScreen(
+                context,
+                screen: Dashboard_Admin(),
+                withNavBar: false, // OPTIONAL VALUE. True by default.
+                pageTransitionAnimation: PageTransitionAnimation.fade,
               );
               break;
-            case 'BusinessOwner':
-              Navigator.of(context).pushReplacement(
-                MaterialPageRoute(builder: (context) => Dashboard_BO()),
+            case 'Business Owner' || 'BusinessOwner':
+              // Navigator.of(context).pushReplacement(
+              //   MaterialPageRoute(builder: (context) => Dashboard_BO()),
+              // );
+              PersistentNavBarNavigator.pushNewScreen(
+                context,
+                screen: Dashboard_BO(),
+                withNavBar: false, // OPTIONAL VALUE. True by default.
+                pageTransitionAnimation: PageTransitionAnimation.fade,
               );
               break;
-            case 'delivery':
-              Navigator.of(context).pushReplacement(
-                MaterialPageRoute(builder: (context) => DeliveryPanel()),
+            case 'Delivery' || 'delivery':
+              // Navigator.of(context).pushReplacement(
+              //   MaterialPageRoute(builder: (context) => DeliveryPanel()),
+              // );
+              PersistentNavBarNavigator.pushNewScreen(
+                context,
+                screen: DeliveryPanel(),
+                withNavBar: false, // OPTIONAL VALUE. True by default.
+                pageTransitionAnimation: PageTransitionAnimation.fade,
               );
               break;
             default:
-            // Handle other user types or show an error
+              // Handle other user types or show an error
               break;
           }
         }
@@ -191,7 +205,7 @@ class _LoginPageState extends State<LoginPage> {
                     child: const Text(
                       "Login",
                       style: TextStyle(
-                          fontSize: 17,
+                          fontSize: 16,
                           fontWeight: FontWeight.w600,
                           color: Colors.white),
                     ),
@@ -199,15 +213,22 @@ class _LoginPageState extends State<LoginPage> {
                   Align(
                     alignment: Alignment.center,
                     child: CupertinoButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        PersistentNavBarNavigator.pushNewScreen(
+                          context,
+                          screen: ForgetPassword(),
+                          withNavBar: false, // OPTIONAL VALUE. True by default.
+                          pageTransitionAnimation: PageTransitionAnimation.fade,
+                        );
+                      },
                       child: Text(
-                        "Forgot the Password ?",
+                        "Forgot your Password ?",
                         style: TextStyle(color: Colors.blueAccent),
                       ),
                     ),
                   ),
                   SizedBox(
-                    height: 50,
+                    height: 1,
                   ),
                   MaterialButton(
                     minWidth: double.infinity,
@@ -223,10 +244,13 @@ class _LoginPageState extends State<LoginPage> {
                         borderRadius: BorderRadius.circular(50)),
                     child: const Text("Sign Up",
                         style: TextStyle(
-                            fontSize: 17,
+                            fontSize: 16,
                             fontWeight: FontWeight.w600,
                             color: Colors.white)),
-                  )
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
                 ],
               ),
             ),

@@ -214,9 +214,9 @@ class _ProductListState extends State<ProductList> {
               final product = products[index];
               return GestureDetector(
                 onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => ProductDetails(product: product),
-                  ));
+                  // Navigator.of(context).push(MaterialPageRoute(
+                  //   builder: (context) => ProductDetails(product: product),
+                  // ));
 
                   /*// Show a dialog to display business owner ID
                   showDialog(

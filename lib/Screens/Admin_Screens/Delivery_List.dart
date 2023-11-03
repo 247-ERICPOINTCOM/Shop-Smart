@@ -155,7 +155,7 @@ class _Delivery_ListState extends State<Delivery_List> {
             label: Text('Edit'),
           ),
           DataColumn(
-            label: Text('Delet'),
+            label: Text('Delete'),
           ),
         ],//columns
         rows: //getRows(OderList));

@@ -45,10 +45,10 @@ class WelcomeScreen extends StatelessWidget {
               ),
               // the logo image container
               Container(
-                height: MediaQuery.of(context).size.height / 2,
+                height: MediaQuery.of(context).size.height / 5,
                 decoration: const BoxDecoration(
                   image: DecorationImage(
-                    image: AssetImage("assets/images/logo.png"),
+                    image: AssetImage("assets/images/logo_high.png"),
                   ),
                 ),
               ),
@@ -65,10 +65,11 @@ class WelcomeScreen extends StatelessWidget {
                       borderRadius: BorderRadius.circular(50)),
                   child: const Text("Sign Up",
                       style: TextStyle(
+                          fontSize: 16,
                           fontWeight: FontWeight.w600, color: Colors.white)),
                 ),
                 // margin white space
-                SizedBox(height: 20),
+                SizedBox(height: 18),
                 MaterialButton(
                   minWidth: double.infinity,
                   height: 60,
@@ -83,9 +84,11 @@ class WelcomeScreen extends StatelessWidget {
                   child: const Text(
                     "Login",
                     style: TextStyle(
+                      fontSize: 16,
                         fontWeight: FontWeight.w600, color: Colors.white),
                   ),
                 ),
+                SizedBox(height: 50),
               ]),
             ]),
       ),

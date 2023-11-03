@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-
 import 'menu_delivery.dart';
 
 void main() {
   runApp(DeliveryPanel());
 }
+
+
 
 class DeliveryPanel extends StatelessWidget {
   @override
@@ -25,10 +26,10 @@ class ProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: const Menubar_Delivery(),
-      backgroundColor: Colors.grey, // Change the background color to grey
+      backgroundColor: kBackgroundColor, // Change the background color to grey
       appBar: AppBar(
-        backgroundColor: Colors.green, // Change the app bar color to green
-        title: Text('Delivery Profile'),
+        backgroundColor: kPrimaryLightColor, // Change the app bar color to green
+        title: Text('Delivery Dashboard'),
       ),
       body: Center(
         child: Column(
@@ -40,6 +41,12 @@ class ProfileScreen extends StatelessWidget {
             ),
             SizedBox(height: 20),
             ElevatedButton(
+                style:ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(kPrimaryColor)
+                    ,shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30),
+                        )
+                    )),
               onPressed: () {
                 Navigator.of(context).pushNamed('/orders');
               },

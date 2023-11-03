@@ -11,6 +11,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 import 'businessadd.dart'; // Import Firebase Auth
 
+const kPrimaryColor = Color(0xFFB4D677);
+const kPrimaryLightColor = Color(0xFFA0D1C6);
 const kBackgroundColor = Color(0xFFF7F7F7);
 const kTextColor = Color(0xFFa0a0a0);
 const kInputColor = Color(0xFFe3e3e3);
@@ -62,8 +64,9 @@ class _Menubar_BOState extends State<Menubar_BO> {
                 accountName: Text('Business Owner', style: TextStyle(color: kBlackColor)),
                 accountEmail: Text(userEmail, style: TextStyle(color: kBlackColor)),
                 currentAccountPicture: const CircleAvatar(
+                  backgroundColor: kPrimaryColor,
                   child: ClipOval(
-                    child: Icon(MyFlutterApp.user_circle, size: 70),
+                    child: Icon(Icons.person, size: 70, color: kBlackColor,),
                   ),
                 ),
                 decoration: const BoxDecoration(color: kBackgroundColor),
@@ -72,33 +75,33 @@ class _Menubar_BOState extends State<Menubar_BO> {
           ),
           const Divider(),
           ListTile(
-            leading: const Icon(MyFlutterApp.dashboard, size: 20, color: kBlackColor),
+            leading: const Icon(Icons.dashboard, size: 20, color: kPrimaryColor),
             title: const Text('Dashboard', style: TextStyle(color: kBlackColor, fontWeight: FontWeight.bold)),
             onTap: () => selectedItem(context, 0),
           ),
           ListTile(
-            leading: const Icon(MyFlutterApp.user_circle, size: 20, color: kBlackColor),
+            leading: const Icon(Icons.people_alt_rounded, size: 20, color: kPrimaryColor),
             title: const Text('My Profile', style: TextStyle(color: kBlackColor, fontWeight: FontWeight.bold)),
             onTap: () => selectedItem(context, 1),
           ),
           ListTile(
-            leading: const Icon(MyFlutterApp.shopping_bag, size: 20, color: kBlackColor),
+            leading: const Icon(Icons.shopping_bag, size: 20, color: kPrimaryColor),
             title: const Text('Product', style: TextStyle(color: kBlackColor, fontWeight: FontWeight.bold)),
             onTap: () => selectedItem(context, 2),
           ),
           const Divider(),
           ListTile(
-            leading: const Icon(MyFlutterApp.logout, size: 20, color: kBlackColor),
+            leading: const Icon(Icons.logout, size: 20, color: kPrimaryColor),
             title: const Text('Logout', style: TextStyle(color: kBlackColor, fontWeight: FontWeight.bold)),
             onTap: () => selectedItem(context, 3),
           ),
           ListTile(
-            leading: const Icon(MyFlutterApp.cog_2, size: 20, color: kBlackColor),
+            leading: const Icon(Icons.settings, size: 20, color: kPrimaryColor),
             title: const Text('Setting', style: TextStyle(color: kBlackColor, fontWeight: FontWeight.bold)),
             onTap: () => selectedItem(context, 4),
           ),
           ListTile(
-            leading: const Icon(Icons.help_outline_outlined, size: 20, color: kBlackColor),
+            leading: const Icon(Icons.help_outline_outlined, size: 20, color: kPrimaryColor),
             title: const Text('Help', style: TextStyle(color: kBlackColor, fontWeight: FontWeight.bold)),
             onTap: () => selectedItem(context, 5),
           ),

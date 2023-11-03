@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shopsmartly/Screens/cart/cart.dart';
 import 'package:shopsmartly/Screens/product/customer_reviews.dart';
-
+import '../../Object_Clasess/product_model.dart';
 import '../../constants/constants.dart';
 
 class ProductDetails extends StatefulWidget {
-  final Product product;
+  final ProductModel singleProduct;
 
-  const ProductDetails({super.key, required this.product});
+  const ProductDetails({super.key, required this.singleProduct});
 
   @override
   State<ProductDetails> createState() => _ProductDetailsState();
@@ -60,7 +60,7 @@ class _ProductDetailsState extends State<ProductDetails> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Image.network(
-                widget.product.imageUrl,
+                widget.singleProduct.productImage,
                 height: 400,
                 width: 400,
               ),
@@ -71,7 +71,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    widget.product.name,
+                    widget.singleProduct.productName,
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -97,7 +97,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                 ],
               ),
               Text(
-                '\$${widget.product.price.toStringAsFixed(2)}',
+                '\$${widget.singleProduct.productPrice.toStringAsFixed(2)}',
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,

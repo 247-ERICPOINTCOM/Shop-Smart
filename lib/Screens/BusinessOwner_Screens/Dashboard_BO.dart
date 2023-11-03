@@ -28,9 +28,10 @@ class Dashboard_BO extends StatelessWidget {
 
     return Scaffold(
       drawer: const Menubar_BO(),
-      backgroundColor: Colors.grey, // Change the background color to grey
+      backgroundColor: kBackgroundColor, // Change the background color to grey
       appBar: AppBar(
-        backgroundColor: Colors.green, // Change the app bar color to green
+        title: Text('Business Owner Dashboard'),
+        backgroundColor: kPrimaryColor, // Change the app bar color to green
       ),
       body: Builder(
         builder: (BuildContext context) {
@@ -39,30 +40,22 @@ class Dashboard_BO extends StatelessWidget {
               children: [
                 const SizedBox(height: 10),
                 // Dashboard Title
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: Text(
-                    'Dashboard',
-                    style: TextStyle(
-                      fontSize: 30.0,
-                      color: kBlackColor,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
                 const SizedBox(height: 20),
                 // Boxes for New Orders, New Sales, Total Accounts, and Total Products
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      _buildDashboardBox(context, 'New Orders', ''),
-                      _buildDashboardBox(context, 'New Sales', ''),
-                      _buildDashboardBox(context, 'Total Accounts', ''),
-                      _buildDashboardBox(context, 'Total Products', ''),
-                    ],
-                  ),
+                GridView.count(
+                  shrinkWrap: true,
+                  primary: false,
+                  padding: EdgeInsets.only(top: 12.0, left: 12.0, right: 12.0),
+                  crossAxisSpacing: 10.0,
+                  mainAxisSpacing: 10.0,
+                  crossAxisCount: 2,
+                  childAspectRatio: (2.5),
+                  children: [
+                    _buildDashboardBox(context, 'New Orders', '1'),
+                    _buildDashboardBox(context, 'New Sales', '1'),
+                    _buildDashboardBox(context, 'Total Accounts', '1'),
+                    _buildDashboardBox(context, 'Total Products', '1'),
+                  ],
                 ),
                 const SizedBox(height: 20),
                 // Today's Transactions Table
@@ -155,7 +148,7 @@ class Dashboard_BO extends StatelessWidget {
           .width - 60) / 4,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
-        color: Colors.white, // Change the box color to white
+        color: kPrimaryLightColor, // Change the box color to white
       ),
       child: Padding(
         padding: const EdgeInsets.all(10.0),
@@ -173,12 +166,14 @@ class Dashboard_BO extends StatelessWidget {
               ),
             ),
             Expanded(
-              child: Text(
-                value,
-                style: TextStyle(
-                  fontSize: 20.0,
-                  color: kBlackColor, // Change text color to black
-                  fontWeight: FontWeight.bold,
+              child: Center(
+                child: Text(
+                  value,
+                  style: TextStyle(
+                    fontSize: 20.0,
+                    color: kBlackColor, // Change text color to black
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
             ),

@@ -4,8 +4,48 @@ import 'package:flutter/services.dart';
 import 'package:shopsmartly/constants/constants.dart';
 // ------------------------------------------
 
-class ForgetpassPage extends StatelessWidget {
-  const ForgetpassPage({Key? key}) : super(key: key);
+class ForgetPassword extends StatefulWidget {
+  const ForgetPassword({Key? key}) : super(key: key);
+
+  @override
+  State<ForgetPassword> createState() => _ForgetPasswordState();
+}
+
+class _ForgetPasswordState extends State<ForgetPassword> {
+  String _email = '';
+
+  Widget inputFile({obscureText = false, hintText}){
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        const SizedBox(
+          height: 5,
+        ),
+        TextFormField(
+          keyboardType: TextInputType.emailAddress,
+          decoration: InputDecoration(
+            labelText: 'Email',
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(60.0),
+            ),
+          ),
+          validator: (value) {
+            if (value?.isEmpty ?? true) {
+              return 'Please enter your email';
+            }
+            return null;
+          },
+          onChanged: (value) {
+            setState(() {
+              _email = value;
+            });
+          },
+        ),
+        const SizedBox(height: 10)
+      ],
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +77,7 @@ class ForgetpassPage extends StatelessWidget {
                   children: <Widget>[
                     const Column(
                       children: <Widget>[
-                        Text("Recover Password",
+                        Text("Forget Password",
                           style: TextStyle(
                             fontSize: 30,
                             fontWeight: FontWeight.bold,
@@ -45,7 +85,7 @@ class ForgetpassPage extends StatelessWidget {
                           ),
                         ),
                         SizedBox(height: 20,),
-                        Text("A link will be send to your email",
+                        Text("A link will be sent to your email.",
                             style: TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.w400,
@@ -93,35 +133,6 @@ class ForgetpassPage extends StatelessWidget {
       ),
     );
   }
-}
-
-Widget inputFile({obscureText = false, hintText}){
-  return Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: <Widget>[
-      const SizedBox(
-        height: 5,
-      ),
-      TextField(
-        obscureText: obscureText,
-        decoration:  InputDecoration(
-          hintText: hintText,
-          contentPadding: const EdgeInsets.symmetric(vertical: 0,
-              horizontal: 10),
-          enabledBorder: const OutlineInputBorder(
-            borderSide: BorderSide(
-                color: Colors.grey),
-          ),
-          border: const OutlineInputBorder(
-            borderSide: BorderSide(
-                color: Colors.grey
-            ),
-          ),
-        ),
-      ),
-      const SizedBox(height: 10)
-    ],
-  );
 }
 
 
