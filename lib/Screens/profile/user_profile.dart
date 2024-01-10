@@ -168,6 +168,7 @@ class _EditProfileState extends State<EditProfile> {
                   keyboardType: TextInputType.name,
                   controller: firstName,
                   decoration: InputDecoration(
+                    hintText: appProvider.getUserInformation.userFirstName,
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(60.0),
                     ),
@@ -195,6 +196,7 @@ class _EditProfileState extends State<EditProfile> {
                   keyboardType: TextInputType.name,
                   controller: lastName,
                   decoration: InputDecoration(
+                    hintText: appProvider.getUserInformation.userLastName,
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(60.0),
                     ),

@@ -12,6 +12,9 @@ class UserModel {
     required this.userEmail,
     required this.userPhone,
     required this.userType,
+    required this.userFirstName,
+    required this.userLastName,
+    required this.userBudget,
   });
 
   String? userImage;
@@ -20,6 +23,9 @@ class UserModel {
   String userEmail;
   String userPhone;
   String userType;
+  String userFirstName;
+  String userLastName;
+  double userBudget;
 
   factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
         userID: json["userID"],
@@ -28,6 +34,9 @@ class UserModel {
         userEmail: json["userEmail"],
         userPhone: json["userPhone"],
         userType: json["userType"],
+        userFirstName: json["userFirstName"],
+        userLastName: json["userLastName"],
+        userBudget: double.parse(json["userBudget"].toString()),
       );
 
   Map<String, dynamic> toJson() => {
@@ -37,14 +46,19 @@ class UserModel {
         "userEmail": userEmail,
         "userPhone": userPhone,
         "userType": userType,
+        "userFirstName": userFirstName,
+        "userLastName": userLastName,
+        "userBudget": userBudget,
       };
 
-  UserModel copyWith({
-    String? userName,
-    userImage,
-    userPhone,
-    userType,
-  }) =>
+  UserModel copyWith(
+          {String? userName,
+          userImage,
+          userPhone,
+          userType,
+          userFirstName,
+          userLastName,
+          userBudget}) =>
       UserModel(
         userID: userID,
         userEmail: userEmail,
@@ -52,5 +66,8 @@ class UserModel {
         userImage: userImage ?? this.userImage,
         userPhone: userPhone ?? this.userPhone,
         userType: userType ?? this.userType,
+        userFirstName: userFirstName ?? this.userFirstName,
+        userLastName: userLastName ?? this.userLastName,
+        userBudget: userBudget ?? this.userBudget,
       );
 }

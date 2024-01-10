@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class PrimaryButton extends StatelessWidget {
   final void Function()? onPressed;
   final String title;
+
   const PrimaryButton({super.key, this.onPressed, required this.title});
 
   @override
@@ -12,10 +13,9 @@ class PrimaryButton extends StatelessWidget {
       width: double.infinity,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(50)
-          )
-        ),
+          foregroundColor: Colors.white,
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(50))),
         onPressed: onPressed,
         child: Text(title),
       ),

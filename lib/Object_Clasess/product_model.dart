@@ -14,9 +14,9 @@ class ProductModel {
     required this.productPrice,
     required this.productDescription,
     required this.productQuantity,
-    required this.businessOwnerUID,
-    required this.productLocation,
-    required this.productPickupLocation,
+    // required this.businessOwnerUID,
+    // required this.productLocation,
+    // required this.productPickupLocation,
   });
 
   String productImage;
@@ -25,9 +25,9 @@ class ProductModel {
   double productPrice;
   String productDescription;
   int? productQuantity;
-  String businessOwnerUID;
-  GeoPoint productLocation; // Use GeoPoint for location
-  String productPickupLocation; // Add pickup location field
+  // String businessOwnerUID;
+  // GeoPoint productLocation; // Use GeoPoint for location
+  // String productPickupLocation; // Add pickup location field
 
   factory ProductModel.fromJson(Map<String, dynamic> json) => ProductModel(
         productID: json["productID"],
@@ -36,9 +36,9 @@ class ProductModel {
         productImage: json["productImage"],
         productQuantity: json["productQuantity"],
         productPrice: double.parse(json["productPrice"].toString()),
-        businessOwnerUID: json["businessOwnerUid"],
-        productLocation: json["productLocation"],
-        productPickupLocation: json["productPickupLocation"],
+        // businessOwnerUID: json["businessOwnerUid"],
+        // productLocation: json["productLocation"],
+        // productPickupLocation: json["productPickupLocation"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -48,9 +48,9 @@ class ProductModel {
         "productImage": productImage,
         "productPrice": productPrice,
         "productQuantity": productQuantity,
-        "businessOwnerUID": businessOwnerUID,
-        "productLocation": productLocation,
-        "productPickupLocation": productPickupLocation,
+        // "businessOwnerUID": businessOwnerUID,
+        // "productLocation": productLocation,
+        // "productPickupLocation": productPickupLocation,
       };
 
   ProductModel copyWith({
@@ -63,8 +63,8 @@ class ProductModel {
         productImage: productImage,
         productQuantity: productQuantity ?? this.productQuantity,
         productPrice: productPrice,
-        businessOwnerUID: businessOwnerUID,
-        productLocation: productLocation,
-        productPickupLocation: productPickupLocation,
+        // businessOwnerUID: businessOwnerUID,
+        // productLocation: productLocation,
+        // productPickupLocation: productPickupLocation,
       );
 }

@@ -2,6 +2,7 @@ import 'package:camera/camera.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:provider/provider.dart';
 import 'package:shopsmartly/Object_Clasess/category_model.dart';
 import 'package:shopsmartly/Object_Clasess/product_model.dart';
@@ -15,6 +16,7 @@ import 'package:shopsmartly/constants/routes.dart';
 import 'package:shopsmartly/firebase_helper/firebase_firestore_helper/firebase_firestore.dart';
 import 'package:shopsmartly/provider/app_provider.dart';
 import '../camera/camera.dart';
+import '../cart_screen/cart_screen.dart';
 
 class UserHome extends StatefulWidget {
   const UserHome({super.key});
@@ -59,6 +61,9 @@ class _UserHomeState extends State<UserHome> {
     });
 
     categoriesList = await FirebaseFireStoreHelper.instance.getCategories();
+    productModelList = await FirebaseFireStoreHelper.instance.getBestProducts();
+
+    productModelList.shuffle();
 
     if (mounted) {
       setState(() {
@@ -110,14 +115,14 @@ class _UserHomeState extends State<UserHome> {
                               ),
                               padding: EdgeInsets.symmetric(
                                   vertical: 10.0, horizontal: 20.0),
-                              child: Text(
-                                'No. ${imgList.indexOf(item)} image',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 20.0,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
+                              // child: Text(
+                              //   'No. ${imgList.indexOf(item)} image',
+                              //   style: TextStyle(
+                              //     color: Colors.white,
+                              //     fontSize: 20.0,
+                              //     fontWeight: FontWeight.bold,
+                              //   ),
+                              // ),
                             ),
                           ),
                         ],
@@ -154,7 +159,12 @@ class _UserHomeState extends State<UserHome> {
               icon: Icon(
                 Icons.list_outlined,
                 color: kPrimaryLightColor,
-              ))
+              )),
+          // IconButton(
+          //     onPressed: () {
+          //       Routes.instance.push(widget: NewCartScreen(), context: context);
+          //     },
+          //     icon: Icon(Icons.shopping_cart_outlined))
         ],
         title: Center(
           child: Container(
@@ -232,10 +242,12 @@ class _UserHomeState extends State<UserHome> {
                                     child: CupertinoButton(
                                       padding: EdgeInsets.zero,
                                       onPressed: () {
-                                        Routes.instance.push(
-                                            widget:
-                                                CategoryView(categoryModel: e),
-                                            context: context);
+                                        PersistentNavBarNavigator.pushNewScreen(
+                                          context,
+                                          screen: CategoryView(categoryModel: e),
+                                          withNavBar: false,
+                                          pageTransitionAnimation: PageTransitionAnimation.fade,
+                                        );
                                       },
                                       child: Card(
                                         color: Colors.white,
@@ -363,6 +375,90 @@ class _UserHomeState extends State<UserHome> {
                       },
                     ),
                   ),
+                  // Padding(
+                  //   padding: EdgeInsets.only(top: 10.0, left: 10),
+                  //   child: Text(
+                  //     "Best Products",
+                  //     style: TextStyle(
+                  //       fontSize: 18.0,
+                  //       fontWeight: FontWeight.bold,
+                  //     ),
+                  //   ),
+                  // ),SizedBox(
+                  //   height: 12,
+                  // ),
+                  // productModelList.isEmpty
+                  //     ? Center(
+                  //   child: Text("Best Product is empty"),
+                  // )
+                  //     : GridView.builder(
+                  //     padding: EdgeInsets.only(bottom: 50),
+                  //     shrinkWrap: true,
+                  //     itemCount: productModelList.length,
+                  //     primary: false,
+                  //     gridDelegate:
+                  //     const SliverGridDelegateWithFixedCrossAxisCount(
+                  //         mainAxisSpacing: 20,
+                  //         crossAxisSpacing: 20,
+                  //         childAspectRatio: 0.6,
+                  //         crossAxisCount: 2),
+                  //     itemBuilder: (ctx, index) {
+                  //       ProductModel singleProduct = productModelList[index];
+                  //       return Container(
+                  //         decoration: BoxDecoration(
+                  //           color: kPrimaryLightColor.withOpacity(0.3),
+                  //           borderRadius:
+                  //           BorderRadius.circular(8.0),
+                  //         ),
+                  //         child: Column(
+                  //           children: [
+                  //             SizedBox(
+                  //               height: 12.0,
+                  //             ),
+                  //             Image.network(
+                  //               singleProduct.productImage,
+                  //               height: 100.0,
+                  //               width: 100.0,
+                  //             ),
+                  //             SizedBox(
+                  //               height: 12.0,
+                  //             ),
+                  //             Text(
+                  //               singleProduct.productName,
+                  //               style: TextStyle(
+                  //                 fontSize: 18.0,
+                  //                 fontWeight: FontWeight.bold,
+                  //               ),
+                  //             ),
+                  //             Text(
+                  //                 "Price: \R ${singleProduct.productPrice}"),
+                  //             SizedBox(
+                  //               height: 30.0,
+                  //             ),
+                  //             SizedBox(
+                  //               height: 45,
+                  //               width: 140,
+                  //               child: OutlinedButton(
+                  //                 style: OutlinedButton.styleFrom(
+                  //                   backgroundColor: Colors.black,
+                  //                   foregroundColor: kPrimaryColor
+                  //                 ),
+                  //                 onPressed: () {
+                  //                   // Routes.instance.push(
+                  //                   //     widget: ProductDetails(
+                  //                   //         singleProduct:
+                  //                   //         singleProduct),
+                  //                   //     context: context);
+                  //                 },
+                  //                 child: Text(
+                  //                   "Buy",
+                  //                 ),
+                  //               ),
+                  //             ),
+                  //           ],
+                  //         ),
+                  //       );
+                  //     }),
                   SizedBox(
                     height: 60,
                   )

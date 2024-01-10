@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/widgets.dart';
 import 'package:shopsmartly/Object_Clasess/product_model.dart';
 import 'package:shopsmartly/Object_Clasess/user_model.dart';
@@ -9,11 +10,28 @@ import 'package:shopsmartly/firebase_helper/firebase_storage_helper/firebase_sto
 
 class AppProvider with ChangeNotifier {
   /// Cart Function ///
-  final List<ProductModel> _cartProductList = [];
-  final List<ProductModel> _buyProductList = [];
+  List<UserModel> _userList = [];
+  List<ProductModel> _cartProductList = [];
+  List<ProductModel> _buyProductList = [];
 
   UserModel? _userModel;
+
   UserModel get getUserInformation => _userModel!;
+
+  Future<void> getUserListFun() async {
+    _userList = await FirebaseFireStoreHelper.instance.getUserList();
+  }
+
+  Future<void> deleteUserFromFirebase(UserModel userModel) async {
+    notifyListeners();
+    String value = await FirebaseFireStoreHelper.instance
+        .deleteSingleUser(userModel.userID);
+    if (value == "User Successfully Deleted") {
+      _userList.remove(userModel);
+      showMessage("User Successfully Deleted");
+    }
+    notifyListeners();
+  }
 
   void addCartProduct(ProductModel productModel) {
     _cartProductList.add(productModel);
@@ -25,22 +43,18 @@ class AppProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  void updateUserBudget(UserModel userModel) async {
+    await FirebaseFireStoreHelper.instance.updateUserBudget(userModel);
+    notifyListeners();
+  }
+
+  List<UserModel> get getUserList => _userList;
+
   List<ProductModel> get getCartProviderList => _cartProductList;
 
-  // /// Favourite ///
-  // final List<ProductModel> _favouriteProductList = [];
-  //
-  // void addFavouriteProduct(ProductModel productModel) {
-  //   _favouriteProductList.add(productModel);
-  //   notifyListeners();
-  // }
-  //
-  // void removeFavouriteProduct(ProductModel productModel) {
-  //   _favouriteProductList.remove(productModel);
-  //   notifyListeners();
-  // }
-
-  // List<ProductModel> get getFavouriteProductList => _favouriteProductList;
+  Future<void> callBackFunction() async {
+    await getUserListFun();
+  }
 
   /// User Information
   void getUserInfoFirebase() async {

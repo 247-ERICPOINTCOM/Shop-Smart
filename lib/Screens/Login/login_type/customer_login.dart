@@ -4,30 +4,21 @@ import 'package:flutter/services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
+import 'package:shopsmartly/Screens/Login/login_type/business_owner_login.dart';
+import 'package:shopsmartly/Screens/Login/login_type/delivery_login.dart';
 import 'package:shopsmartly/Screens/SignUp/sign_up_user_type.dart';
 import 'package:shopsmartly/Screens/custom_bottom_bar/CustomBottomBar.dart';
 import 'package:shopsmartly/constants/constants.dart';
+import 'package:shopsmartly/constants/top_titles.dart';
 
-import '../Admin_Screens/Dashboard_Admin.dart';
-import '../BusinessOwner_Screens/Dashboard_BO.dart';
-import '../Delivery_Dashboard/delivery_dashboard.dart';
-// import '../SignUp/signup_screen.dart';
-import 'forget_password.dart';
+class CustomerLogin extends StatefulWidget {
+  const CustomerLogin({super.key});
 
-// // Define your colors
-// const kPrimaryColor = Color(0xFFB4D677);
-// const kPrimaryLightColor = Color(0xFFA0D1C6);
-// const kBackgroundColor = Color(0xFFF7F7F7);
-// const kTextColor = Color(0xff555555);
-// const kLinkTextColor = Color(0xFF0095FF);
-// const kInputColor = Color(0xFFe3e3e3);
-
-class LoginPage extends StatefulWidget {
   @override
-  _LoginPageState createState() => _LoginPageState();
+  _CustomerLoginState createState() => _CustomerLoginState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _CustomerLoginState extends State<CustomerLogin> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -62,15 +53,6 @@ class _LoginPageState extends State<LoginPage> {
               );
               break;
             case 'admin' || 'Admin':
-              // Navigator.of(context).pushReplacement(
-              //   MaterialPageRoute(builder: (context) => Dashboard_Admin()),
-              // );
-              // PersistentNavBarNavigator.pushNewScreen(
-              //   context,
-              //   screen: Dashboard_Admin(),
-              //   withNavBar: false, // OPTIONAL VALUE. True by default.
-              //   pageTransitionAnimation: PageTransitionAnimation.fade,
-              // );
               Navigator.of(context).pop();
               showDialog(
                 context: context,
@@ -79,42 +61,35 @@ class _LoginPageState extends State<LoginPage> {
                     title: const Text('Administrator'),
                     content: SingleChildScrollView(
                       child: ListBody(
-                        children: <Widget>[
-                          Text('Please use the other login.')
-                        ],
+                        children: <Widget>[Text('Please use the other login.')],
                       ),
                     ),
-                      actions: <Widget>[
-                        TextButton(
-                          child: const Text('OK'),
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          },
-                        ),
-                      ],
+                    actions: <Widget>[
+                      TextButton(
+                        child: const Text('OK'),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                    ],
                   );
                 },
               );
-
               break;
             case 'Business Owner' || 'BusinessOwner':
-              // Navigator.of(context).pushReplacement(
-              //   MaterialPageRoute(builder: (context) => Dashboard_BO()),
-              // );
+              showMessage("Please login here.");
               PersistentNavBarNavigator.pushNewScreen(
                 context,
-                screen: Dashboard_BO(),
+                screen: BusinessOwnerLogin(),
                 withNavBar: false, // OPTIONAL VALUE. True by default.
                 pageTransitionAnimation: PageTransitionAnimation.fade,
               );
               break;
             case 'Delivery' || 'delivery':
-              // Navigator.of(context).pushReplacement(
-              //   MaterialPageRoute(builder: (context) => DeliveryPanel()),
-              // );
+              showMessage("Please login here.");
               PersistentNavBarNavigator.pushNewScreen(
                 context,
-                screen: DeliveryPanel(),
+                screen: DeliveryLogin(),
                 withNavBar: false, // OPTIONAL VALUE. True by default.
                 pageTransitionAnimation: PageTransitionAnimation.fade,
               );
@@ -159,6 +134,13 @@ class _LoginPageState extends State<LoginPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
+                  Text(
+                    "Customer Login",
+                    style: TextStyle(
+                      fontSize: 18.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                   Container(
                     height: MediaQuery.of(context).size.height / 3.0,
                     decoration: const BoxDecoration(
@@ -237,25 +219,8 @@ class _LoginPageState extends State<LoginPage> {
                           color: Colors.white),
                     ),
                   ),
-                  Align(
-                    alignment: Alignment.center,
-                    child: CupertinoButton(
-                      onPressed: () {
-                        PersistentNavBarNavigator.pushNewScreen(
-                          context,
-                          screen: ForgetPassword(),
-                          withNavBar: false, // OPTIONAL VALUE. True by default.
-                          pageTransitionAnimation: PageTransitionAnimation.fade,
-                        );
-                      },
-                      child: Text(
-                        "Forgot your Password ?",
-                        style: TextStyle(color: Colors.blueAccent),
-                      ),
-                    ),
-                  ),
                   SizedBox(
-                    height: 1,
+                    height: 10,
                   ),
                   MaterialButton(
                     minWidth: double.infinity,

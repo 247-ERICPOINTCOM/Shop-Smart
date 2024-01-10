@@ -3,6 +3,7 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shopsmartly/Screens/custom_bottom_bar/CustomBottomBar.dart';
+import 'package:shopsmartly/constants/constants.dart';
 import 'package:shopsmartly/firebase_helper/firebase_auth_helper/firebase_auth_helper.dart';
 import 'package:shopsmartly/provider/app_provider.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -43,7 +44,6 @@ class SplashScreen extends StatelessWidget {
   }
 }
 
-
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -80,7 +80,6 @@ class MyApp extends StatelessWidget {
         routes: {
           '/splash_screen': (context) => SplashScreen(),
           '/login': (context) => WelcomeScreen(),
-
         },
         home: SplashScreen(),
         // StreamBuilder(

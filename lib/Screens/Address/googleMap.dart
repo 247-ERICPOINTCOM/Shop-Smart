@@ -2,15 +2,16 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geocoding/geocoding.dart';
+import 'package:shopsmartly/constants/constants.dart';
 
 import 'location_service.dart';
-
 
 class MapSample extends StatefulWidget {
   final LatLng? initialLocation;
   final Function(LatLng)? onLocationSelected;
 
   MapSample({this.initialLocation, this.onLocationSelected});
+
   @override
   State<MapSample> createState() => MapSampleState();
 }
@@ -23,42 +24,6 @@ class MapSampleState extends State<MapSample> {
   static final CameraPosition _kGooglePlex = CameraPosition(
     target: LatLng(37.42796133580664, -122.085749655962),
     zoom: 14.4746,
-  );
-
-  static final Marker _Kgoogleplexmarker = Marker(markerId:
-  MarkerId('_Kgoogleplex'),
-    infoWindow: InfoWindow(title: 'Google Plex'),
-    icon: BitmapDescriptor.defaultMarker,
-    position: LatLng(37.42796133580664, -122.085749655962),
-  );
-  static final CameraPosition _kLake = CameraPosition(
-      bearing: 192.8334901395799,
-      target: LatLng(37.43296265331129, -122.08832357078792),
-      tilt: 59.440717697143555,
-      zoom: 19.151926040649414);
-
-  static final Marker _Klakemarker = Marker(markerId: MarkerId('_Klakemarker'),
-    infoWindow: InfoWindow(title: 'lake'),
-    icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue),
-    position: LatLng(37.43296265331129, -122.08832357078792),
-  );
-  static final Polyline _KPolyline = Polyline(
-    polylineId: PolylineId('_KPolyline'),
-    points: [
-      LatLng(37.42796133580664, -122.085749655962),
-      LatLng(37.43296265331129, -122.08832357078792),
-    ],
-    width: 5,
-  );
-  static final Polygon _kpolygon = Polygon(polygonId: PolygonId('_kpolygon'),
-    points: [
-      LatLng(37.43296265331129, -122.08832357078792),
-      LatLng(37.42796133580664, -122.085749655962),
-      LatLng(37.418, -122.092),
-      LatLng(37.435, -122.092),
-    ],
-    strokeWidth: 5,
-    fillColor: Colors.transparent,
   );
 
   @override
@@ -76,6 +41,7 @@ class MapSampleState extends State<MapSample> {
       );
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -90,54 +56,85 @@ class MapSampleState extends State<MapSample> {
           ),
         ),
       ),
-      body: Column(
+      body: Stack(
         children: [
-          Row(
-            children: [
-              Expanded(
-                child: TextFormField(
-                  controller: _searchController,
-                  textCapitalization: TextCapitalization.words,
-                  decoration: InputDecoration(hintText: 'Search by City'),
-                  onChanged: (value) {
-                    print(value);
-                  },
-                ),
-              ),
-              IconButton(
-                onPressed: () async {
-                  await _moveToLocation(_searchController.text);
-                },
-                icon: Icon(Icons.search),
-              ),
-            ],
+          GoogleMap(
+            mapType: MapType.normal,
+            markers: _markers,
+            initialCameraPosition: _selectedLocation != null
+                ? CameraPosition(target: _selectedLocation!, zoom: 15)
+                : _kGooglePlex,
+            onMapCreated: (GoogleMapController controller) {
+              _controller.complete(controller);
+            },
+            onTap: (LatLng location) {
+              setState(() {
+                _markers.clear();
+                _markers.add(
+                  Marker(
+                    markerId: MarkerId('selected_location'),
+                    position: location,
+                    infoWindow: InfoWindow(title: 'Selected Location'),
+                  ),
+                );
+                _selectedLocation = location;
+                widget.onLocationSelected?.call(location);
+              });
+            },
           ),
-          Container(
-            height: 700,
-            child: GoogleMap(
-              mapType: MapType.normal,
-              markers: _markers, // Set of markers
-              initialCameraPosition: _selectedLocation != null
-                  ? CameraPosition(target: _selectedLocation!, zoom: 15)
-                  : _kGooglePlex,
-              onMapCreated: (GoogleMapController controller) {
-                _controller.complete(controller);
+          Positioned(
+            bottom: 20,
+            right: 100,
+            left: 100,
+            child: ElevatedButton(
+              onPressed: () {
+                Navigator.pushNamed(context, "");
               },
-              onTap: (LatLng location) {
-                // Handle map tap event
-                setState(() {
-                  _markers.clear(); // Clear existing markers
-                  _markers.add(
-                    Marker(
-                      markerId: MarkerId('selected_location'),
-                      position: location,
-                      infoWindow: InfoWindow(title: 'Selected Location'),
+              child: Text(
+                "Confirm location",
+                style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+              ),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Color.fromARGB(255, 180, 214, 119),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                minimumSize: Size(200, 50),
+              ),
+            ),
+          ),
+          Positioned(
+            top: 0,
+            left: 0,
+            right: 0,
+            child: Row(
+              children: [
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: TextFormField(
+                      controller: _searchController,
+                      textCapitalization: TextCapitalization.words,
+                      decoration: InputDecoration(
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          hintText: 'Search by City',
+                          fillColor: kPrimaryLightColor,
+                          filled: true),
+                      onChanged: (value) {
+                        print(value);
+                      },
                     ),
-                  );
-                  _selectedLocation = location; // Update selected location
-                  widget.onLocationSelected?.call(location); // Notify the parent widget
-                });
-              },
+                  ),
+                ),
+                IconButton(
+                  onPressed: () async {
+                    await _moveToLocation(_searchController.text);
+                  },
+                  icon: Icon(Icons.search),
+                ),
+              ],
             ),
           ),
         ],
@@ -151,7 +148,7 @@ class MapSampleState extends State<MapSample> {
       if (locations.isNotEmpty) {
         final firstLocation = locations.first;
         final targetLocation =
-        LatLng(firstLocation.latitude, firstLocation.longitude);
+            LatLng(firstLocation.latitude, firstLocation.longitude);
 
         final GoogleMapController controller = await _controller.future;
         controller.animateCamera(CameraUpdate.newLatLng(targetLocation));

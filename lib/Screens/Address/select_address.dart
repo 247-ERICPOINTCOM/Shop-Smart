@@ -4,14 +4,14 @@ import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import '../cart/cart.dart';
 //import 'package:shop_smartly/Screens/cart/cart.dart';
 
-class selectAddress extends StatefulWidget {
-  const selectAddress({Key? key}) : super(key: key);
+class SelectAddress extends StatefulWidget {
+  const SelectAddress({Key? key}) : super(key: key);
 
   @override
-  State<selectAddress> createState() => _selectAddressState();
+  State<SelectAddress> createState() => _SelectAddressState();
 }
 
-class _selectAddressState extends State<selectAddress> {
+class _SelectAddressState extends State<SelectAddress> {
   int _currentindex = 0;
   List<Widget> _widgetOptions = <Widget>[
     // home(),
@@ -34,20 +34,7 @@ class _selectAddressState extends State<selectAddress> {
           ),
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: [
-          BottomNavigationBarItem(icon: Icon(Icons.home_filled), label: 'home'),
-          BottomNavigationBarItem(icon: Icon(Icons.search), label: 'search'),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.shopping_cart), label: 'cart'),
-        ],
-        currentIndex: _currentindex,
-        selectedItemColor: Colors.grey,
-        unselectedItemColor: Colors.grey[350],
-        onTap: _changeitem,
-      ),
-      body:
-      Column(
+      body: Column(
         children: <Widget>[
           Container(height: 0, child: _widgetOptions.elementAt(_currentindex)),
           Padding(
@@ -67,10 +54,10 @@ class _selectAddressState extends State<selectAddress> {
                     color: Color.fromARGB(255, 160, 209, 198),
                   ),
                   onPressed: () {
-                    Navigator.pushNamed(context, "MapSample"); // Navigate to the "MapSample" page
+                    Navigator.pushNamed(context,
+                        "MapSample"); // Navigate to the "MapSample" page
                   },
                 ),
-
                 Text(
                   'Add new address',
                   style: TextStyle(
@@ -81,39 +68,38 @@ class _selectAddressState extends State<selectAddress> {
               ],
             ),
           ),
-
           Divider(
             height: 8.0,
             color: Colors.black12,
           ),
-
-          SizedBox(height: 320,),
+          Expanded(
+            child: Container(
+                // Your content here
+                ),
+          ),
+          Divider(
+            height: 8.0,
+            color: Colors.black12,
+          ),
           TextButton(
-            child: Text("Continue to checkout",
-              style: TextStyle(
-                  fontSize: 15
-              ),
+            child: Text(
+              "Continue to checkout",
+              style: TextStyle(fontSize: 15),
             ),
             style: TextButton.styleFrom(
-              primary: Colors.grey,
+              foregroundColor: Colors.grey,
               backgroundColor: Color.fromARGB(255, 180, 214, 119),
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20)),
               minimumSize: Size(360, 50),
             ),
             onPressed: () {
-              Navigator.pushNamed(context,"");
+              Navigator.pushNamed(context, "");
             },
           ),
+          SizedBox(height: 20,)
         ],
       ),
     );
-  }
-
-  void _changeitem(int value) {
-    print(value);
-    setState(() {
-      _currentindex = value;
-    });
   }
 }

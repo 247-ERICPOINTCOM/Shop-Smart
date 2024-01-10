@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shopsmartly/Screens/cart/cart.dart';
 import 'package:shopsmartly/Screens/product/customer_reviews.dart';
+import 'package:shopsmartly/provider/app_provider.dart';
 import '../../Object_Clasess/product_model.dart';
 import '../../constants/constants.dart';
 
@@ -20,26 +21,10 @@ class _ProductDetailsState extends State<ProductDetails> {
 
   @override
   Widget build(BuildContext context) {
+    AppProvider appProvider = Provider.of<AppProvider>(
+      context,
+    );
     return Scaffold(
-      bottomNavigationBar: Theme(
-        data: Theme.of(context).copyWith(
-          canvasColor: Colors.grey[350],
-        ),
-        child: BottomNavigationBar(
-          backgroundColor: kBackgroundColor,
-          items: const [
-            BottomNavigationBarItem(
-                icon: Icon(Icons.home_outlined), label: 'Home'),
-            BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Search'),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.shopping_cart_outlined), label: 'Cart'),
-          ],
-          //currentIndex: _currentIndex,
-          selectedItemColor: kPrimaryColor,
-          unselectedItemColor: kPrimaryLightColor,
-          //onTap: ,
-        ),
-      ),
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -61,7 +46,7 @@ class _ProductDetailsState extends State<ProductDetails> {
             children: [
               Image.network(
                 widget.singleProduct.productImage,
-                height: 400,
+                height: 300,
                 width: 400,
               ),
               SizedBox(
@@ -142,7 +127,12 @@ class _ProductDetailsState extends State<ProductDetails> {
                         ),
                         backgroundColor: kPrimaryColor,
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        ProductModel productModel =
+                        widget.singleProduct.copyWith(productQuantity: quantity);
+                        appProvider.addCartProduct(productModel);
+                        showMessage("Added to Bag");
+                      },
                       child: Text(
                         "Add to Bag",
                         style: TextStyle(

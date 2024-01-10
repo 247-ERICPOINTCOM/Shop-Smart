@@ -1,15 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:provider/provider.dart';
+import 'package:shopsmartly/Screens/Address/googleMap.dart';
+import 'package:shopsmartly/Screens/Address/select_address.dart';
+import 'package:shopsmartly/Screens/budget_tracker/budget_tracker.dart';
+import 'package:shopsmartly/Screens/budget_tracker/budget_tracker_widget.dart';
+import 'package:shopsmartly/Screens/cart/cart.dart';
+import 'package:shopsmartly/Screens/map_address/address_menu.dart';
 import 'package:shopsmartly/Screens/profile/user_profile.dart';
 import 'package:shopsmartly/firebase_helper/firebase_auth_helper/firebase_auth_helper.dart';
 import 'package:shopsmartly/provider/app_provider.dart';
 import '../../constants/constants.dart';
 import '../user_screen/User_Dashboard.dart';
+import 'package:slide_popup_dialog_null_safety/slide_popup_dialog.dart'
+    as slideDialog;
 
-class SideDrawer extends StatelessWidget {
+class SideDrawer extends StatefulWidget {
   const SideDrawer({super.key});
 
+  @override
+  State<SideDrawer> createState() => _SideDrawerState();
+}
+
+class _SideDrawerState extends State<SideDrawer> {
   void _showLogoutConfirmationDialog(BuildContext context) {
     showDialog(
       context: context,
@@ -38,6 +51,13 @@ class SideDrawer extends StatelessWidget {
           ],
         );
       },
+    );
+  }
+
+  void _showDialog() {
+    slideDialog.showSlideDialog(
+      context: context,
+      child: BudgetTrackerTest(),
     );
   }
 
@@ -85,7 +105,7 @@ class SideDrawer extends StatelessWidget {
               PersistentNavBarNavigator.pushNewScreen(
                 context,
                 screen: EditProfile(),
-                withNavBar: true,
+                withNavBar: false,
                 pageTransitionAnimation: PageTransitionAnimation.fade,
               );
             },
@@ -112,10 +132,35 @@ class SideDrawer extends StatelessWidget {
               color: kPrimaryLightColor,
             ),
             onTap: () {
+              _showDialog();
+            },
+          ),
+          ListTile(
+            title: Text('Temp Map'),
+            leading: Icon(
+              Icons.map,
+              color: kPrimaryLightColor,
+            ),
+            onTap: () {
               PersistentNavBarNavigator.pushNewScreen(
                 context,
-                screen: OrdersScreen(),
-                withNavBar: true,
+                screen: MapSample(),
+                withNavBar: false,
+                pageTransitionAnimation: PageTransitionAnimation.fade,
+              );
+            },
+          ),
+          ListTile(
+            title: Text('Tester Cart'),
+            leading: Icon(
+              Icons.attach_money,
+              color: kPrimaryLightColor,
+            ),
+            onTap: () {
+              PersistentNavBarNavigator.pushNewScreen(
+                context,
+                screen: MyApp(),
+                withNavBar: false,
                 pageTransitionAnimation: PageTransitionAnimation.fade,
               );
             },

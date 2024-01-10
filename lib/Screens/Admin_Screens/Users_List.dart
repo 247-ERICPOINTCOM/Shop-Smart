@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:shopsmartly/Screens/Admin_Screens/Delete_User.dart';
 import 'package:shopsmartly/Screens/Admin_Screens/Edit_User.dart';
 import 'package:shopsmartly/constants/constants.dart';
 
@@ -72,39 +73,48 @@ class _UserListScreenState extends State<UserListScreen> {
                   DataColumn(label: Text('Delete')),
                 ],
                 rows: users.map((userDoc) {
-                  final username = userDoc['username'] ?? 'N/A';
-                  final email = userDoc['email'] ?? 'N/A';
-                  final userType = userDoc['userType'] ?? 'N/A';
+                  final Map<String, dynamic>? data = userDoc.data() as Map<String, dynamic>?;
+
+                  if (data == null) {
+                    return DataRow(cells: [DataCell(Text('Invalid Data'))]);
+                  }
+
+                  final username = data.containsKey('username') ? data['username'] : 'N/A';
+                  final email = data.containsKey('email') ? data['email'] : 'N/A';
+                  final userType = data.containsKey('userType') ? data['userType'] : 'N/A';
 
                   return DataRow(
                     cells: [
-                      DataCell(Text(username)),
-                      DataCell(Text(email)),
-                      DataCell(Text(userType)),
+                      DataCell(Text('$username')),
+                      DataCell(Text('$email')),
+                      DataCell(Text('$userType')),
                       DataCell(
                         IconButton(
                           icon: Icon(Icons.edit),
                           onPressed: () {
-                            // Handle edit button click
-                            // You can navigate to an edit screen or show a dialog for editing.
                             Navigator.of(context).push(MaterialPageRoute(
                               builder: (context) => const Edit_User(),
                             ));
                           },
-                        ), // Add spacing between buttons
+                        ),
                       ),
                       DataCell(
                         IconButton(
-                          icon: Icon(Icons.delete, color: Colors.red,), // Add a trash can icon
+                          icon: Icon(Icons.delete, color: Colors.red),
                           onPressed: () {
                             // Handle delete button click
                             // You can show a confirmation dialog and delete the user.
+                            Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => const Edit_User(),
+                            ));
+
                           },
                         ),
                       )
                     ],
                   );
                 }).toList(),
+
               ),
             ),
           );

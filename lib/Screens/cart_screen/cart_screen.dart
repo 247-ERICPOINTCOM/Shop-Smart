@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shopsmartly/Screens/cart_screen/widgets/single_cart_item.dart';
 import '../../constants/constants.dart';
 import '../../provider/app_provider.dart';
 import '../../widgets/primary_button/primary_button.dart';
@@ -90,9 +91,9 @@ class _NewCartScreenState extends State<NewCartScreen> {
           itemCount: appProvider.getCartProviderList.length,
           padding: EdgeInsets.all(12),
           itemBuilder: (ctx, index) {
-            // return SingleCartItem(
-            //   singleProduct: appProvider.getCartProviderList[index],
-            // );
+            return SingleCartItem(
+              singleProduct: appProvider.getCartProviderList[index],
+            );
           }),
     );
   }

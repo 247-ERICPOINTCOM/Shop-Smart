@@ -13,9 +13,10 @@ var user = 'User';
 void showMessage(String message) {
   Fluttertoast.showToast(
       msg: message,
-      backgroundColor: Colors.pink,
+      backgroundColor: kLinkTextColor,
+      toastLength: Toast.LENGTH_LONG,
       textColor: Colors.white,
-      fontSize: 16.0);
+      fontSize: 18.0);
 }
 
 showLoaderDialog(BuildContext context) {
@@ -66,24 +67,28 @@ bool loginValidation(String email, String password) {
 }
 
 bool signUpValidation(
-    String email, String password, String name, String phone, String house) {
-  if (email.isEmpty && password.isEmpty && name.isEmpty && phone.isEmpty) {
-    showMessage("All fields are empty");
+    String email, String username, String firstName, String lastName, String phone, String password) {
+  if (email.isEmpty && username.isEmpty && firstName.isEmpty && lastName.isEmpty  && phone.isEmpty && password.isEmpty) {
+    showMessage("All fields are empty.");
     return false;
-  } else if (name.isEmpty) {
-    showMessage("Name field is empty");
+  } else if (username.isEmpty) {
+    showMessage("Username field is empty.");
     return false;
   } else if (email.isEmpty) {
-    showMessage("E-mail field is empty");
+    showMessage("E-mail field is empty.");
     return false;
   } else if (phone.isEmpty) {
-    showMessage("Phone Number field is empty");
+    showMessage("Phone Number field is empty.");
     return false;
-  } else if (house.isEmpty) {
-    showMessage("House Address field is empty");
+  } else if (firstName.isEmpty) {
+    showMessage("First Name field is empty.");
     return false;
-  } else if (password.isEmpty) {
-    showMessage("Password field is empty");
+  } else if (lastName.isEmpty) {
+    showMessage("Last Name field is empty.");
+    return false;
+  }
+  else if (password.isEmpty) {
+    showMessage("Password field is empty.");
     return false;
   } else {
     return true;

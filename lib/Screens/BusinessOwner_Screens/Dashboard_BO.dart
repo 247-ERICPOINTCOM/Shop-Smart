@@ -3,14 +3,14 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shopsmartly/Screens/BusinessOwner_Screens/Menubar_BO.dart';
 
-const kPrimaryColor = Color(0xFFB4D677);
-const kPrimaryLightColor = Color(0xFFA0D1C6);
-const kBackgroundColor = Color(0xFFF7F7F7);
-const kTextColor = Color(0xFF000000); // Change text color to black
-const kInputColor = Color(0xFFe3e3e3);
-const kRedColor = Color(0xFFE88276);
-const kyellowColor = Color(0xFFF5d287);
-const kBlackColor = Color(0xFF000000);
+// const kPrimaryColor = Color(0xFFB4D677);
+// const kPrimaryLightColor = Color(0xFFA0D1C6);
+// const kBackgroundColor = Color(0xFFF7F7F7);
+// const kTextColor = Color(0xFF000000); // Change text color to black
+// const kInputColor = Color(0xFFe3e3e3);
+// const kRedColor = Color(0xFFE88276);
+// const kyellowColor = Color(0xFFF5d287);
+// const kBlackColor = Color(0xFF000000);
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
