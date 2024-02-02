@@ -17,7 +17,7 @@ class ProductDetails extends StatefulWidget {
 }
 
 class _ProductDetailsState extends State<ProductDetails> {
-  int quantity = 0;
+  int quantity = 1;
 
   @override
   Widget build(BuildContext context) {
@@ -128,8 +128,8 @@ class _ProductDetailsState extends State<ProductDetails> {
                         backgroundColor: kPrimaryColor,
                       ),
                       onPressed: () {
-                        ProductModel productModel =
-                        widget.singleProduct.copyWith(productQuantity: quantity);
+                        ProductModel productModel = widget.singleProduct
+                            .copyWith(productQuantity: quantity);
                         appProvider.addCartProduct(productModel);
                         showMessage("Added to Bag");
                       },

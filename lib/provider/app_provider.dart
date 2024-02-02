@@ -43,8 +43,10 @@ class AppProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void updateUserBudget(UserModel userModel) async {
-    await FirebaseFireStoreHelper.instance.updateUserBudget(userModel);
+
+  void updateUserBudget({required double userBudget}) async {
+    _userModel = _userModel?.copyWith(userBudget: userBudget);
+    await FirebaseFireStoreHelper.instance.updateUserBudget(_userModel!);
     notifyListeners();
   }
 

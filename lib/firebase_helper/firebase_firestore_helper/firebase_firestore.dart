@@ -34,7 +34,7 @@ class FirebaseFireStoreHelper {
           .collection("users")
           .doc(userModel.userID)
           .update(userModel.toJson());
-      showMessage('Budget updated');
+      //showMessage('Budget updated');
     } catch (e) {
       // Show a user-friendly error message
       showMessage("Failed to update budget.");
@@ -141,7 +141,7 @@ class FirebaseFireStoreHelper {
     }
   }
 
-  ///uploading user's order to firebase
+//   //uploading user's order to firebase
 // Future<bool> uploadOrderedProductFirebase(
 //     List<ProductModel> list, BuildContext context, String payment) async {
 //   try {
@@ -193,7 +193,7 @@ class FirebaseFireStoreHelper {
 //   }
 // }
 
-  ///Get User Order///
+//   /Get User Order///
 // Future<List<OrderModel>> getUserOrder() async {
 //   try {
 //     QuerySnapshot<Map<String, dynamic>> querySnapshot =

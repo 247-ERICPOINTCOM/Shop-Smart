@@ -58,7 +58,7 @@ class _CategoryViewState extends State<CategoryView> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(
-                    height: kToolbarHeight * 0.5,
+                    height: kToolbarHeight * 0.9,
                   ),
                   Padding(
                     padding: const EdgeInsets.all(12.0),
