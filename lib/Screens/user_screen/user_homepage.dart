@@ -12,6 +12,7 @@ import 'package:shopsmartly/Screens/payment/payment_method.dart';
 import 'package:shopsmartly/Screens/side_drawer/side_drawer.dart';
 import 'package:shopsmartly/Screens/user_screen/User_Dashboard.dart';
 import 'package:shopsmartly/constants/constants.dart';
+import 'package:shopsmartly/constants/paymentFail.dart';
 import 'package:shopsmartly/constants/routes.dart';
 import 'package:shopsmartly/firebase_helper/firebase_firestore_helper/firebase_firestore.dart';
 import 'package:shopsmartly/provider/app_provider.dart';
@@ -35,7 +36,7 @@ class _UserHomeState extends State<UserHome> {
   final List<Widget> screens = [
     PaymentMethod(),
     MyOrders(),
-    ProfileScreen(),
+    OrderFailedPage(),
   ];
 
   int _current = 0;

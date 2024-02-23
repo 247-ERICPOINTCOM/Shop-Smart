@@ -1,10 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:shopsmartly/Object_Clasess/Stores.dart';
 import 'package:shopsmartly/Object_Clasess/category_model.dart';
 import 'package:shopsmartly/Object_Clasess/product_model.dart';
 import 'package:shopsmartly/Object_Clasess/user_model.dart';
 import 'package:shopsmartly/constants/constants.dart';
+import 'package:shopsmartly/constants/paymentFail.dart';
+import 'package:shopsmartly/constants/paymentSuccess.dart';
+import 'package:shopsmartly/constants/routes.dart';
 
 class FirebaseFireStoreHelper {
   static FirebaseFireStoreHelper instance = FirebaseFireStoreHelper();
@@ -141,57 +146,73 @@ class FirebaseFireStoreHelper {
     }
   }
 
-//   //uploading user's order to firebase
-// Future<bool> uploadOrderedProductFirebase(
-//     List<ProductModel> list, BuildContext context, String payment) async {
-//   try {
-//     showLoaderDialog(context);
-//     double totalPrice = 0.0;
-//     for (var element in list) {
-//       totalPrice += element.price * element.quantity!;
-//     }
-//     DocumentReference documentReference = _firebaseFirestore
-//         .collection("usersOrders")
-//         .doc(FirebaseAuth.instance.currentUser!.uid)
-//         .collection("orders")
-//         .doc();
-//     DocumentReference owner =
-//     _firebaseFirestore.collection("orders").doc(documentReference.id);
-//     String uid = FirebaseAuth.instance.currentUser!.uid;
-//     String? email = FirebaseAuth.instance.currentUser!.email;
-//
-//     owner.set({
-//       "products": list.map((e) => e.toJson()),
-//       "status": "Pending",
-//       "totalPrice": totalPrice,
-//       "payment": payment,
-//       "userId": uid,
-//       "orderId": owner.id,
-//       "email": email,
-//     });
-//
-//     documentReference.set({
-//       "products": list.map((e) => e.toJson()),
-//       "status": "Pending",
-//       "totalPrice": totalPrice,
-//       "payment": payment,
-//       "userId": uid,
-//       "orderId": documentReference.id,
-//       "email": email,
-//     });
-//
-//
-//     Routes.instance.push(widget: OrderConfirmationPage(), context: context);
-//     Navigator.of(context, rootNavigator: true).pop();
-//     //showMessage("Successfully Ordered");
-//
-//     return true;
-//   } catch (e) {
-//     Routes.instance.push(widget: OrderFailedPage(), context: context);
-//     Navigator.of(context, rootNavigator: true).pop();
-//     return false;
-//   }
-// }
+  //uploading user's order to firebase
+Future<bool> uploadOrderedProductFirebase(
+    List<ProductModel> list, BuildContext context, String payment) async {
+  try {
+    showLoaderDialog(context);
+    double totalPrice = 0.0;
+    for (var element in list) {
+      totalPrice += element.productPrice * element.productQuantity!;
+    }
+    DocumentReference documentReference = _firebaseFirestore
+        .collection("usersOrders")
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .collection("orders")
+        .doc();
+    DocumentReference businessOwner =
+    _firebaseFirestore.collection("orders").doc(documentReference.id);
+    String uid = FirebaseAuth.instance.currentUser!.uid;
+    String? email = FirebaseAuth.instance.currentUser!.email;
+
+    businessOwner.set({
+      "products": list.map((e) => e.toJson()),
+      "status": "Pending",
+      "totalPrice": totalPrice,
+      "payment": payment,
+      "userId": uid,
+      "orderId": businessOwner.id,
+      "email": email,
+    });
+
+    documentReference.set({
+      "products": list.map((e) => e.toJson()),
+      "status": "Pending",
+      "totalPrice": totalPrice,
+      "payment": payment,
+      "userId": uid,
+      "orderId": documentReference.id,
+      "email": email,
+    });
+
+
+    // Routes.instance.push(widget: OrderConfirmationPage(), context: context);
+    // Navigator.of(context, rootNavigator: true).pop();
+    // //showMessage("Successfully Ordered");
+
+    PersistentNavBarNavigator.pushNewScreen(
+      context,
+      screen: OrderConfirmationPage(),
+      withNavBar: false, // OPTIONAL VALUE. True by default.
+      pageTransitionAnimation: PageTransitionAnimation.fade,
+    );
+
+
+    return true;
+  } catch (e) {
+    // Routes.instance.push(widget: OrderFailedPage(), context: context);
+    // Navigator.of(context, rootNavigator: true).pop();
+
+    PersistentNavBarNavigator.pushNewScreen(
+      context,
+      screen: OrderFailedPage(),
+      withNavBar: false, // OPTIONAL VALUE. True by default.
+      pageTransitionAnimation: PageTransitionAnimation.fade,
+    );
+
+    return false;
+  }
+}
 
 //   /Get User Order///
 // Future<List<OrderModel>> getUserOrder() async {

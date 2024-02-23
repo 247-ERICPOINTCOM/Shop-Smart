@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:provider/provider.dart';
+import 'package:shopsmartly/Screens/cart_item_checkout/cart_item_checkout.dart';
 import 'package:shopsmartly/Screens/cart_screen/widgets/single_cart_item.dart';
+import 'package:shopsmartly/constants/routes.dart';
 import '../../constants/constants.dart';
 import '../../provider/app_provider.dart';
 import '../../widgets/primary_button/primary_button.dart';
@@ -42,7 +45,21 @@ class _NewCartScreenState extends State<NewCartScreen> {
                   ),
                   SizedBox(width: 110,),
                   ElevatedButton(
-                    onPressed: () {  },
+                    onPressed: () {
+                      appProvider.clearBuyProduct();
+                      appProvider.addBuyProductCartList();
+                      appProvider.clearCart();
+                      if (appProvider.getBuyProductList.isEmpty) {
+                        showMessage("Please add an item");
+                      } else {
+                        PersistentNavBarNavigator.pushNewScreen(
+                          context,
+                          screen: CartItemCheckout(),
+                          withNavBar: false, // OPTIONAL VALUE. True by default.
+                          pageTransitionAnimation: PageTransitionAnimation.fade,
+                        );
+                      }
+                    },
                     child: const Text(
                       "Checkout",
                       style: TextStyle(
@@ -56,20 +73,6 @@ class _NewCartScreenState extends State<NewCartScreen> {
               SizedBox(
                 height: 24,
               ),
-              // PrimaryButton(
-              //   title: "Checkout",
-              //   onPressed: () {
-              //     // appProvider.clearBuyProduct();
-              //     // appProvider.addBuyProductCartList();
-              //     // appProvider.clearCart();
-              //     // if (appProvider.getBuyProductList.isEmpty) {
-              //     //   showMessage("Cart is empty :(");
-              //     // } else {
-              //     //   Routes.instance
-              //     //       .push(widget: CartItemCheckout(), context: context);
-              //     // }
-              //   },
-              // ),
             ],
           ),
         ),
